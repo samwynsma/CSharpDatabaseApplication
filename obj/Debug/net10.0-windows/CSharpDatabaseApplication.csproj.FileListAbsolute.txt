@@ -1,0 +1,15 @@
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\bin\Debug\net10.0-windows\CSharpDatabaseApplication.exe
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\bin\Debug\net10.0-windows\CSharpDatabaseApplication.deps.json
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\bin\Debug\net10.0-windows\CSharpDatabaseApplication.runtimeconfig.json
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\bin\Debug\net10.0-windows\CSharpDatabaseApplication.dll
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\bin\Debug\net10.0-windows\CSharpDatabaseApplication.pdb
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\CSharpDatabaseApplication.GeneratedMSBuildEditorConfig.editorconfig
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\CSharpDatabaseApplication.AssemblyInfoInputs.cache
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\CSharpDatabaseApplication.AssemblyInfo.cs
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\CSharpDatabaseApplication.csproj.CoreCompileInputs.cache
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\CSharpDatabaseApplication.sourcelink.json
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\CSharpDatabaseApplication.dll
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\refint\CSharpDatabaseApplication.dll
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\CSharpDatabaseApplication.pdb
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\CSharpDatabaseApplication.genruntimeconfig.cache
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\ref\CSharpDatabaseApplication.dll
