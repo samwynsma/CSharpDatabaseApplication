@@ -13,3 +13,7 @@ D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\
 D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\CSharpDatabaseApplication.pdb
 D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\CSharpDatabaseApplication.genruntimeconfig.cache
 D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\ref\CSharpDatabaseApplication.dll
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\bin\Debug\net10.0-windows\System.Data.OleDb.dll
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\bin\Debug\net10.0-windows\runtimes\win\lib\net10.0\System.Data.OleDb.dll
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\CSharpDatabaseApplication.csproj.AssemblyReference.cache
+D:\OneDrive\Documents\GitHub\CSharpDatabaseSimulation\CSharpDatabaseApplication\obj\Debug\net10.0-windows\CSharpDa.6A0D1F6D.Up2Date

@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "0oqB1BrGbC4=",
+  "dgSpecHash": "H+zztfE4AJU=",
   "success": true,
   "projectFilePath": "D:\\OneDrive\\Documents\\GitHub\\CSharpDatabaseSimulation\\CSharpDatabaseApplication\\CSharpDatabaseApplication.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\cpcss\\.nuget\\packages\\system.data.oledb\\10.0.9\\system.data.oledb.10.0.9.nupkg.sha512"
+  ],
   "logs": []
 }
