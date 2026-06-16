@@ -10,8 +10,8 @@ public class MainMenu : Form
     private static readonly string DBPath = @"TestDatabase.accdb";
     private static readonly string ConnString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={DBPath};Persist Security Info=False;";
     private readonly TextBox checkItem;
-
     private readonly TextBox dbItemAdd;
+    private readonly TextBox dbQuantity;
 
     public MainMenu()
     {
@@ -91,12 +91,33 @@ public class MainMenu : Form
 
     private int GetItemCount(String tableName, String itemText)
     {
-        return 0;
+        String query = $"SELECT Quantity FROM [{tableName}] WHERE Item = [{itemText}]";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@item", itemText);
+            conn.Open();
+            object result = cmd.ExecuteScalar();
+            int val = 0;
+
+            if (result != null && result != DBNull.Value)
+            {
+                val = Convert.ToInt32(result);
+            }
+            return val;
+        }
     }
 
     private void AddDBRow(String tableName, String itemText)
     {
-        
+        String query = $"INSERT INTO [{tableName}] (Item, Quantity) VALUES ([{itemText}], 0)";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@item", itemText);
+            conn.Open();
+            object result = cmd.ExecuteScalar();
+        }
     }
 
     private void CheckItemExists(object sender, EventArgs e)
@@ -158,11 +179,9 @@ public class MainMenu : Form
             if(!exists)
             {
                 AddDBRow(tableName, itemText);
+                Console.WriteLine("New item in database: " + itemText);
             }
-            else
-            {
-                int itemCount = GetItemCount(tableName, itemText);
-            }
+            int itemCount = GetItemCount(tableName, itemText);
         }
         catch (Exception ex)
         {
