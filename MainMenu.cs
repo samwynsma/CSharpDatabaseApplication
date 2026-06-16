@@ -20,7 +20,7 @@ public class MainMenu : Form
         this.StartPosition = FormStartPosition.CenterScreen;
 
         Label myLabel = new Label();
-        myLabel.Text = "See if item is in store: ";
+        myLabel.Text = "Item: ";
         myLabel.Location = new Point(10, 20);
         myLabel.AutoSize = true;
         this.Controls.Add(myLabel);  
@@ -39,7 +39,7 @@ public class MainMenu : Form
 
 
         Label addLabel = new Label();
-        addLabel.Text = "Add item to store";
+        addLabel.Text = "Quantity: ";
         addLabel.Location = new Point(10, 40);
         addLabel.AutoSize = true;
         this.Controls.Add(addLabel);
@@ -108,6 +108,35 @@ public class MainMenu : Form
         }
     }
 
+    private void IncreaseItemQuantity(String tableName, String itemText, int quantityText)
+    {
+        String query = $"UPDATE [{tableName}] SET Quantity = Quantity + [{quantityText}] WHERE Item = [{itemText}]";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@item", itemText);
+            conn.Open();
+            object result = cmd.ExecuteScalar();
+        }
+    }
+
+    private void DecreaseItemQuantity(String tableName, String itemText, int quantityText)
+    {
+        int itemQuantity = GetItemCount(tableName, itemText);
+        if(itemQuantity < quantityText)
+        {
+            throw new Exception("Cannot decrease item quantity by more than there are items");
+        }
+        String query = $"UPDATE [{tableName}] SET Quantity = Quantity + [{quantityText}] WHERE Item = [{itemText}]";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@item", itemText);
+            conn.Open();
+            object result = cmd.ExecuteScalar();
+        }
+    }
+
     private void AddDBRow(String tableName, String itemText)
     {
         String query = $"INSERT INTO [{tableName}] (Item, Quantity) VALUES ([{itemText}], 0)";
@@ -161,7 +190,6 @@ public class MainMenu : Form
     private void AddItemToDatabase(object sender, EventArgs e)
     {
         string tableName = "GroceryStore";
-        string quantityCol = "Quantity";
         string itemCol = "Item";
         string itemText = dbItemAdd.Text.Trim();
 
