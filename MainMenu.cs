@@ -9,6 +9,8 @@ public class MainMenu : Form
 {
     private static readonly string DBPath = @"TestDatabase.accdb";
     private static readonly string ConnString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={DBPath};Persist Security Info=False;";
+    private readonly TextBox itemToCheck;
+
     public MainMenu()
     {
         this.Text = "Test form.";
@@ -21,7 +23,7 @@ public class MainMenu : Form
         myLabel.AutoSize = true;
         this.Controls.Add(myLabel);
 
-        TextBox itemToCheck = new TextBox();
+        itemToCheck = new TextBox();
         itemToCheck.Location = new Point(150, 18);
         itemToCheck.Width = 200;
         this.Controls.Add(itemToCheck);
@@ -46,24 +48,54 @@ public class MainMenu : Form
 
     private void CheckItemExists(object sender, EventArgs e)
     {
-        MessageBox.Show("Button was clicked, but task has not been implemented yet.");
-        this.Controls["InformationLabel"].Text = "Button has been clicked!";
-        this.Controls["InformationLabel"].BackColor = Color.Green;
-        String tableName = "GroceryStore";
-        String columnName = "Item";
+        string tableName = "GroceryStore";
+        string columnName = "Item";
+        string itemText = itemToCheck.Text.Trim();
+
+        Label infoLabel = (Label)this.Controls["InformationLabel"];
+
+        if (string.IsNullOrWhiteSpace(itemText))
+        {
+            infoLabel.Text = "Please enter an item name.";
+            infoLabel.BackColor = Color.Yellow;
+            return;
+        }
+
+        string query = $"SELECT COUNT(*) FROM [{tableName}] WHERE [{columnName}] = ?";
 
         try
         {
-            using(OleDbConnection conn = new OleDbConnection(ConnString))
+            using (OleDbConnection conn = new OleDbConnection(ConnString))
+            using (OleDbCommand cmd = new OleDbCommand(query, conn))
             {
+                cmd.Parameters.AddWithValue("@item", itemText);
                 conn.Open();
+
+                object result = cmd.ExecuteScalar();
+                int count = 0;
+
+                if (result != null && result != DBNull.Value)
+                {
+                    count = Convert.ToInt32(result);
+                }
+
+                if (count > 0)
+                {
+                    infoLabel.Text = $"'{itemText}' was found in the {tableName} table.";
+                    infoLabel.BackColor = Color.LightGreen;
+                }
+                else
+                {
+                    infoLabel.Text = $"'{itemText}' was not found in the {tableName} table.";
+                    infoLabel.BackColor = Color.LightSalmon;
+                }
             }
         }
         catch (Exception ex)
         {
             Console.WriteLine("Unexpected error: " + ex.Message);
-            this.Controls["InformationLabel"].Text = "An Error has occured " + ex.Message;
-            this.Controls["InformationLabel"].BackColor = Color.Red;
+            infoLabel.Text = "An error occurred: " + ex.Message;
+            infoLabel.BackColor = Color.Red;
         }
     }
 
