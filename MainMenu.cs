@@ -1,15 +1,10 @@
 using System;
 using System.Drawing;
-using System.Drawing.Text;
 using System.Windows.Forms;
-using System.Data;
-using System.Data.OleDb;
 using System.Windows.Forms.VisualStyles;
 
 public class MainMenu : Form
 {
-    private static readonly string DBPath = @"TestDatabase.accdb";
-    private static readonly string ConnString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={DBPath};Persist Security Info=False;";
     private readonly TextBox dbItem;
     private readonly TextBox dbQuantity;
 
@@ -87,101 +82,6 @@ public class MainMenu : Form
         this.Controls.Add(label2);
     }
 
-    private bool DoesItemExist(string tableName, string columnName, string itemText)
-    {
-        string query = $"SELECT COUNT(*) FROM [{tableName}] WHERE [{columnName}] = ?";
-
-        using (OleDbConnection conn = new OleDbConnection(ConnString))
-        using (OleDbCommand cmd = new OleDbCommand(query, conn))
-        {
-            cmd.Parameters.AddWithValue("@item", itemText);
-            conn.Open();
-
-            object result = cmd.ExecuteScalar();
-            int count = 0;
-
-            if (result != null && result != DBNull.Value)
-            {
-                count = Convert.ToInt32(result);
-            }
-
-            return count > 0;
-        }
-    }
-
-    private int GetItemCount(String tableName, String itemText)
-    {
-        String query = $"SELECT Quantity FROM [{tableName}] WHERE Item = ?";
-        using (OleDbConnection conn = new OleDbConnection(ConnString))
-        using (OleDbCommand cmd = new OleDbCommand(query, conn))
-        {
-            cmd.Parameters.AddWithValue("@item", itemText);
-            conn.Open();
-            object result = cmd.ExecuteScalar();
-            int val = 0;
-
-            if (result != null && result != DBNull.Value)
-            {
-                val = Convert.ToInt32(result);
-            }
-            return val;
-        }
-    }
-
-    private void IncreaseItemQuantity(String tableName, string itemText, int quantityText)
-    {
-        String query = $"UPDATE [{tableName}] SET Quantity = Quantity + ? WHERE Item = ?";
-        using (OleDbConnection conn = new OleDbConnection(ConnString))
-        using (OleDbCommand cmd = new OleDbCommand(query, conn))
-        {
-            cmd.Parameters.AddWithValue("@quantity", quantityText);
-            cmd.Parameters.AddWithValue("@item", itemText);
-            conn.Open();
-            cmd.ExecuteNonQuery();
-        }
-    }
-
-    private void DecreaseItemQuantity(String tableName, string itemText, int quantityText)
-    {
-        int itemQuantity = GetItemCount(tableName, itemText);
-        if (itemQuantity < quantityText)
-        {
-            throw new Exception("Cannot decrease item quantity by more than there are items");
-        }
-        String query = $"UPDATE [{tableName}] SET Quantity = Quantity - ? WHERE Item = ?";
-        using (OleDbConnection conn = new OleDbConnection(ConnString))
-        using (OleDbCommand cmd = new OleDbCommand(query, conn))
-        {
-            cmd.Parameters.AddWithValue("@quantity", quantityText);
-            cmd.Parameters.AddWithValue("@item", itemText);
-            conn.Open();
-            cmd.ExecuteNonQuery();
-        }
-    }
-
-    private void AddDBRow(String tableName, String itemText)
-    {
-        String query = $"INSERT INTO [{tableName}] (Item, Quantity) VALUES (?, 0)";
-        using (OleDbConnection conn = new OleDbConnection(ConnString))
-        using (OleDbCommand cmd = new OleDbCommand(query, conn))
-        {
-            cmd.Parameters.AddWithValue("@item", itemText);
-            conn.Open();
-            cmd.ExecuteNonQuery();
-        }
-    }
-
-    private void DeleteDBRow(String tableName, String itemText)
-    {
-        String query = $"DELETE FROM [{tableName}] WHERE Item = ?";
-        using (OleDbConnection conn = new OleDbConnection(ConnString))
-        using (OleDbCommand cmd = new OleDbCommand(query, conn))
-        {
-            cmd.Parameters.AddWithValue("@item", itemText);
-            conn.Open();
-            cmd.ExecuteNonQuery();
-        }
-    }
 
     private void CheckItemExists(object sender, EventArgs e)
     {
@@ -200,7 +100,7 @@ public class MainMenu : Form
 
         try
         {
-            bool exists = DoesItemExist(tableName, columnName, itemText);
+            bool exists = DatabaseHelper.DoesItemExist(tableName, columnName, itemText);
 
             if (exists)
             {
@@ -235,19 +135,12 @@ public class MainMenu : Form
             infoLabel.BackColor = Color.Yellow;
             return;
         }
-
-        if (string.IsNullOrWhiteSpace(itemText))
-        {
-            infoLabel.Text = "Please enter an item name.";
-            infoLabel.BackColor = Color.Yellow;
-            return;
-        }
         try
         {
-            bool exists = DoesItemExist(tableName, itemCol, itemText);
+            bool exists = DatabaseHelper.DoesItemExist(tableName, itemCol, itemText);
             if(!exists)
             {
-                AddDBRow(tableName, itemText);
+                DatabaseHelper.AddDBRow(tableName, itemText);
                 Console.WriteLine("New item in database: " + itemText);
                 infoLabel.Text = itemText + " has been added to the database.";
                 infoLabel.BackColor = Color.Green;
@@ -283,7 +176,7 @@ public class MainMenu : Form
 
         try
         {
-            bool exists = DoesItemExist(tableName, itemCol, itemText);
+            bool exists = DatabaseHelper.DoesItemExist(tableName, itemCol, itemText);
             int quantityText = Convert.ToInt32(dbQuantity.Text.Trim());
             if(!exists)
             {
@@ -297,7 +190,7 @@ public class MainMenu : Form
             }
             else
             {
-                IncreaseItemQuantity(tableName, itemText, quantityText);
+                DatabaseHelper.IncreaseItemQuantity(tableName, itemText, quantityText);
                 infoLabel.Text = quantityText + " of the item " + itemText + " have been added to the database";
                 infoLabel.BackColor = Color.Green;
             }
@@ -327,7 +220,7 @@ public class MainMenu : Form
 
         try
         {
-            bool exists = DoesItemExist(tableName, itemCol, itemText);
+            bool exists = DatabaseHelper.DoesItemExist(tableName, itemCol, itemText);
             int quantityText = Convert.ToInt32(dbQuantity.Text.Trim());
             if(!exists)
             {
@@ -341,7 +234,7 @@ public class MainMenu : Form
             }
             else
             {
-                DecreaseItemQuantity(tableName, itemText, quantityText);
+                DatabaseHelper.DecreaseItemQuantity(tableName, itemText, quantityText);
                 infoLabel.Text = quantityText + " of the item " + itemText + " have been sold and thus have been removed from the database.";
                 infoLabel.BackColor = Color.Green;
             }
@@ -371,7 +264,7 @@ public class MainMenu : Form
 
         try
         {
-            bool exists = DoesItemExist(tableName, itemCol, itemText);
+            bool exists = DatabaseHelper.DoesItemExist(tableName, itemCol, itemText);
             if(!exists)
             {
                 infoLabel.Text = itemText + " is not present in the database";
@@ -392,7 +285,7 @@ public class MainMenu : Form
                     return;
                 }
 
-                DeleteDBRow(tableName, itemText);
+                DatabaseHelper.DeleteDBRow(tableName, itemText);
                 infoLabel.Text = itemText + " has been removed from the database.";
                 infoLabel.BackColor = Color.Green;
             }
