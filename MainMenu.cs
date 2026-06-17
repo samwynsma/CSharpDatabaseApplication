@@ -91,12 +91,8 @@ public class MainMenu : Form
 
         Label infoLabel = (Label)this.Controls["InformationLabel"];
 
-        if (string.IsNullOrWhiteSpace(itemText))
-        {
-            infoLabel.Text = "Please enter an item name.";
-            infoLabel.BackColor = Color.Yellow;
+        if(IsTextNull(itemText))
             return;
-        }
 
         try
         {
@@ -104,20 +100,16 @@ public class MainMenu : Form
 
             if (exists)
             {
-                infoLabel.Text = $"'{itemText}' was found in the {tableName} table.";
-                infoLabel.BackColor = Color.LightGreen;
+                ChangeTextAndColor(infoLabel, $"'{itemText}' was found in the {tableName} table.", Color.LightGreen);
             }
             else
             {
-                infoLabel.Text = $"'{itemText}' was not found in the {tableName} table.";
-                infoLabel.BackColor = Color.LightSalmon;
+                ChangeTextAndColor(infoLabel, $"'{itemText}' was not found in the {tableName} table.", Color.LightSalmon);
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Unexpected error: " + ex.Message);
-            infoLabel.Text = "An error occurred: " + ex.Message;
-            infoLabel.BackColor = Color.Red;
+            DisplayErrorMessage(ex.Message);
         }
     }
 
@@ -129,12 +121,9 @@ public class MainMenu : Form
 
         Label infoLabel = (Label)this.Controls["InformationLabel"];
 
-        if (string.IsNullOrWhiteSpace(itemText))
-        {
-            infoLabel.Text = "Please enter an item name.";
-            infoLabel.BackColor = Color.Yellow;
+        if(IsTextNull(itemText))
             return;
-        }
+
         try
         {
             bool exists = DatabaseHelper.DoesItemExist(tableName, itemCol, itemText);
@@ -142,20 +131,16 @@ public class MainMenu : Form
             {
                 DatabaseHelper.AddDBRow(tableName, itemText);
                 Console.WriteLine("New item in database: " + itemText);
-                infoLabel.Text = itemText + " has been added to the database.";
-                infoLabel.BackColor = Color.Green;
+                ChangeTextAndColor(infoLabel, itemText + " has been added to the database.", Color.Green);
             }
             else
             {
-                infoLabel.Text = itemText + " is already present in the database";
-                infoLabel.BackColor = Color.Yellow;
+                ChangeTextAndColor(infoLabel, itemText + " is already present in the database", Color.Yellow);
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Unexpected error: " + ex.Message);
-            infoLabel.Text = "An error occurred: " + ex.Message;
-            infoLabel.BackColor = Color.Red;
+            DisplayErrorMessage(ex.Message);
         }
     }
 
@@ -167,12 +152,8 @@ public class MainMenu : Form
 
         Label infoLabel = (Label)this.Controls["InformationLabel"];
 
-        if (string.IsNullOrWhiteSpace(itemText))
-        {
-            infoLabel.Text = "Please enter an item name.";
-            infoLabel.BackColor = Color.Yellow;
+        if(IsTextNull(itemText))
             return;
-        }
 
         try
         {
@@ -180,26 +161,21 @@ public class MainMenu : Form
             int quantityText = Convert.ToInt32(dbQuantity.Text.Trim());
             if(!exists)
             {
-                infoLabel.Text = itemText + " is not present in the database";
-                infoLabel.BackColor = Color.Yellow;
+                ChangeTextAndColor(infoLabel, itemText + " is not present in the database", Color.Yellow);
             }
             else if(quantityText <= 0)
             {
-                infoLabel.Text = "Quantity was set to " + quantityText + ". Quantity must be greater than 0.";
-                infoLabel.BackColor = Color.Orange;
+                ChangeTextAndColor(infoLabel, "Quantity was set to " + quantityText + ". Quantity must be greater than 0.", Color.Orange);
             }
             else
             {
                 DatabaseHelper.IncreaseItemQuantity(tableName, itemText, quantityText);
-                infoLabel.Text = quantityText + " of the item " + itemText + " have been added to the database";
-                infoLabel.BackColor = Color.Green;
+                ChangeTextAndColor(infoLabel, quantityText + " of the item " + itemText + " have been added to the database", Color.Green);
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Unexpected error: " + ex.Message);
-            infoLabel.Text = "An error occurred: " + ex.Message;
-            infoLabel.BackColor = Color.Red;
+            DisplayErrorMessage(ex.Message);
         }
     }
 
@@ -211,12 +187,8 @@ public class MainMenu : Form
 
         Label infoLabel = (Label)this.Controls["InformationLabel"];
 
-        if (string.IsNullOrWhiteSpace(itemText))
-        {
-            infoLabel.Text = "Please enter an item name.";
-            infoLabel.BackColor = Color.Yellow;
+        if(IsTextNull(itemText))
             return;
-        }
 
         try
         {
@@ -224,26 +196,21 @@ public class MainMenu : Form
             int quantityText = Convert.ToInt32(dbQuantity.Text.Trim());
             if(!exists)
             {
-                infoLabel.Text = itemText + " is not present in the database";
-                infoLabel.BackColor = Color.Yellow;
+                ChangeTextAndColor(infoLabel, itemText + " is not present in the database", Color.Yellow);
             }
             else if(quantityText <= 0)
             {
-                infoLabel.Text = "Quantity was set to " + quantityText + ". Quantity must be greater than 0.";
-                infoLabel.BackColor = Color.Orange;
+                ChangeTextAndColor(infoLabel, "Quantity was set to " + quantityText + ". Quantity must be greater than 0.", Color.Orange);
             }
             else
             {
                 DatabaseHelper.DecreaseItemQuantity(tableName, itemText, quantityText);
-                infoLabel.Text = quantityText + " of the item " + itemText + " have been sold and thus have been removed from the database.";
-                infoLabel.BackColor = Color.Green;
+                ChangeTextAndColor(infoLabel, quantityText + " of the item " + itemText + " have been sold and thus have been removed from the database.", Color.Green);
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Unexpected error: " + ex.Message);
-            infoLabel.Text = "An error occurred: " + ex.Message;
-            infoLabel.BackColor = Color.Red;
+            DisplayErrorMessage(ex.Message);
         }
     }
 
@@ -255,20 +222,15 @@ public class MainMenu : Form
 
         Label infoLabel = (Label)this.Controls["InformationLabel"];
 
-        if (string.IsNullOrWhiteSpace(itemText))
-        {
-            infoLabel.Text = "Please enter an item name.";
-            infoLabel.BackColor = Color.Yellow;
+        if(IsTextNull(itemText))
             return;
-        }
 
         try
         {
             bool exists = DatabaseHelper.DoesItemExist(tableName, itemCol, itemText);
             if(!exists)
             {
-                infoLabel.Text = itemText + " is not present in the database";
-                infoLabel.BackColor = Color.Yellow;
+                ChangeTextAndColor(infoLabel, itemText + " is not present in the database", Color.Yellow);
             }
             else
             {
@@ -280,22 +242,44 @@ public class MainMenu : Form
 
                 if (confirmation != DialogResult.Yes)
                 {
-                    infoLabel.Text = "Item deletion canceled.";
-                    infoLabel.BackColor = Color.LightGoldenrodYellow;
+                    ChangeTextAndColor(infoLabel, itemText + "Item deletion canceled.", Color.LightGoldenrodYellow);
                     return;
                 }
 
                 DatabaseHelper.DeleteDBRow(tableName, itemText);
-                infoLabel.Text = itemText + " has been removed from the database.";
-                infoLabel.BackColor = Color.Green;
+                ChangeTextAndColor(infoLabel, itemText + " has been removed from the database.", Color.Green);
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Unexpected error: " + ex.Message);
-            infoLabel.Text = "An error occurred: " + ex.Message;
-            infoLabel.BackColor = Color.Red;
+            DisplayErrorMessage(ex.Message);
         }
+    }
+
+    private void DisplayErrorMessage(String message)
+    {
+        Label infoLabel = (Label)this.Controls["InformationLabel"];
+
+        Console.WriteLine("Unexpected error: " + message);
+        ChangeTextAndColor(infoLabel, "An error occurred: " + message, Color.Red);
+    }
+
+    public bool IsTextNull(String text)
+    {
+        Label infoLabel = (Label)this.Controls["InformationLabel"];
+
+        if(String.IsNullOrWhiteSpace(text))
+        {
+            ChangeTextAndColor(infoLabel, "Please enter an item name.", Color.Yellow);
+            return true;
+        }
+        return false;
+    }
+
+    public void ChangeTextAndColor(Label label, String text, Color color)
+    {
+        label.Text = text;
+        label.BackColor = color;
     }
 
     [STAThread]
