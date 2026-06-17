@@ -4,6 +4,7 @@ using System.Drawing.Text;
 using System.Windows.Forms;
 using System.Data;
 using System.Data.OleDb;
+using System.Windows.Forms.VisualStyles;
 
 public class MainMenu : Form
 {
@@ -43,17 +44,24 @@ public class MainMenu : Form
 
         Button checkItemBtn = new Button();
         checkItemBtn.Text = "Check Item";
-        checkItemBtn.Location = new Point(20, 200);
+        checkItemBtn.Location = new Point(20, 100);
         checkItemBtn.Width = 75;
         checkItemBtn.Click += CheckItemExists;
         this.Controls.Add(checkItemBtn);
 
         Button addItemBtn = new Button();
         addItemBtn.Text = "Add Item";
-        addItemBtn.Location = new Point(100, 200);
+        addItemBtn.Location = new Point(100, 100);
         addItemBtn.Width = 75;
         addItemBtn.Click += AddItemToDatabase;
         this.Controls.Add(addItemBtn);
+
+        Button stockItemBtn = new Button();
+        stockItemBtn.Text = "Stock Item";
+        stockItemBtn.Location = new Point(180, 100);
+        stockItemBtn.Width = 75;
+        stockItemBtn.Click += StockItemInDatabase;
+        this.Controls.Add(stockItemBtn);
 
         Label label2 = new Label
         {
@@ -90,7 +98,7 @@ public class MainMenu : Form
 
     private int GetItemCount(String tableName, String itemText)
     {
-        String query = $"SELECT Quantity FROM [{tableName}] WHERE Item = [{itemText}]";
+        String query = $"SELECT Quantity FROM [{tableName}] WHERE Item = ?";
         using (OleDbConnection conn = new OleDbConnection(ConnString))
         using (OleDbCommand cmd = new OleDbCommand(query, conn))
         {
@@ -107,44 +115,46 @@ public class MainMenu : Form
         }
     }
 
-    private void IncreaseItemQuantity(String tableName, String itemText, int quantityText)
+    private void IncreaseItemQuantity(String tableName, string itemText, int quantityText)
     {
-        String query = $"UPDATE [{tableName}] SET Quantity = Quantity + [{quantityText}] WHERE Item = [{itemText}]";
+        String query = $"UPDATE [{tableName}] SET Quantity = Quantity + ? WHERE Item = ?";
         using (OleDbConnection conn = new OleDbConnection(ConnString))
         using (OleDbCommand cmd = new OleDbCommand(query, conn))
         {
+            cmd.Parameters.AddWithValue("@quantity", quantityText);
             cmd.Parameters.AddWithValue("@item", itemText);
             conn.Open();
-            object result = cmd.ExecuteScalar();
+            cmd.ExecuteNonQuery();
         }
     }
 
-    private void DecreaseItemQuantity(String tableName, String itemText, int quantityText)
+    private void DecreaseItemQuantity(String tableName, string itemText, int quantityText)
     {
         int itemQuantity = GetItemCount(tableName, itemText);
-        if(itemQuantity < quantityText)
+        if (itemQuantity < quantityText)
         {
             throw new Exception("Cannot decrease item quantity by more than there are items");
         }
-        String query = $"UPDATE [{tableName}] SET Quantity = Quantity + [{quantityText}] WHERE Item = [{itemText}]";
+        String query = $"UPDATE [{tableName}] SET Quantity = Quantity - ? WHERE Item = ?";
         using (OleDbConnection conn = new OleDbConnection(ConnString))
         using (OleDbCommand cmd = new OleDbCommand(query, conn))
         {
+            cmd.Parameters.AddWithValue("@quantity", quantityText);
             cmd.Parameters.AddWithValue("@item", itemText);
             conn.Open();
-            object result = cmd.ExecuteScalar();
+            cmd.ExecuteNonQuery();
         }
     }
 
     private void AddDBRow(String tableName, String itemText)
     {
-        String query = $"INSERT INTO [{tableName}] (Item, Quantity) VALUES ([{itemText}], 0)";
+        String query = $"INSERT INTO [{tableName}] (Item, Quantity) VALUES (?, 0)";
         using (OleDbConnection conn = new OleDbConnection(ConnString))
         using (OleDbCommand cmd = new OleDbCommand(query, conn))
         {
             cmd.Parameters.AddWithValue("@item", itemText);
             conn.Open();
-            object result = cmd.ExecuteScalar();
+            cmd.ExecuteNonQuery();
         }
     }
 
@@ -214,6 +224,43 @@ public class MainMenu : Form
             {
                 infoLabel.Text = itemText + " is already present in the database";
                 infoLabel.BackColor = Color.Yellow;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Unexpected error: " + ex.Message);
+            infoLabel.Text = "An error occurred: " + ex.Message;
+            infoLabel.BackColor = Color.Red;
+        }
+    }
+
+    private void StockItemInDatabase(object sender, EventArgs e)
+    {
+        String tableName = "GroceryStore";
+        String itemText = dbItem.Text.Trim();
+        String itemCol = "Item";
+
+        Label infoLabel = (Label)this.Controls["InformationLabel"];
+
+        try
+        {
+            bool exists = DoesItemExist(tableName, itemCol, itemText);
+            int quantityText = Convert.ToInt32(dbQuantity.Text.Trim());
+            if(!exists)
+            {
+                infoLabel.Text = itemText + " is not present in the database";
+                infoLabel.BackColor = Color.Yellow;
+            }
+            else if(quantityText <= 0)
+            {
+                infoLabel.Text = "Quantity was set to " + quantityText + ". Quantity must be greater than 0.";
+                infoLabel.BackColor = Color.Orange;
+            }
+            else
+            {
+                IncreaseItemQuantity(tableName, itemText, quantityText);
+                infoLabel.Text = quantityText + " of the item " + itemText + " have been added to the database";
+                infoLabel.BackColor = Color.Green;
             }
         }
         catch (Exception ex)
