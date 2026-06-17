@@ -63,6 +63,13 @@ public class MainMenu : Form
         stockItemBtn.Click += StockItemInDatabase;
         this.Controls.Add(stockItemBtn);
 
+        Button sellItemBtn = new Button();
+        sellItemBtn.Text = "Sell Item";
+        sellItemBtn.Location = new Point(260, 100);
+        sellItemBtn.Width = 75;
+        sellItemBtn.Click += SellItemInDatabase;
+        this.Controls.Add(sellItemBtn);
+
         Label label2 = new Label
         {
             Name = "InformationLabel",
@@ -260,6 +267,43 @@ public class MainMenu : Form
             {
                 IncreaseItemQuantity(tableName, itemText, quantityText);
                 infoLabel.Text = quantityText + " of the item " + itemText + " have been added to the database";
+                infoLabel.BackColor = Color.Green;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Unexpected error: " + ex.Message);
+            infoLabel.Text = "An error occurred: " + ex.Message;
+            infoLabel.BackColor = Color.Red;
+        }
+    }
+
+    private void SellItemInDatabase(object sender, EventArgs e)
+    {
+        String tableName = "GroceryStore";
+        String itemText = dbItem.Text.Trim();
+        String itemCol = "Item";
+
+        Label infoLabel = (Label)this.Controls["InformationLabel"];
+
+        try
+        {
+            bool exists = DoesItemExist(tableName, itemCol, itemText);
+            int quantityText = Convert.ToInt32(dbQuantity.Text.Trim());
+            if(!exists)
+            {
+                infoLabel.Text = itemText + " is not present in the database";
+                infoLabel.BackColor = Color.Yellow;
+            }
+            else if(quantityText <= 0)
+            {
+                infoLabel.Text = "Quantity was set to " + quantityText + ". Quantity must be greater than 0.";
+                infoLabel.BackColor = Color.Orange;
+            }
+            else
+            {
+                DecreaseItemQuantity(tableName, itemText, quantityText);
+                infoLabel.Text = quantityText + " of the item " + itemText + " have been sold and thus have been removed from the database.";
                 infoLabel.BackColor = Color.Green;
             }
         }
