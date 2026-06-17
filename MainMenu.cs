@@ -9,8 +9,7 @@ public class MainMenu : Form
 {
     private static readonly string DBPath = @"TestDatabase.accdb";
     private static readonly string ConnString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={DBPath};Persist Security Info=False;";
-    private readonly TextBox checkItem;
-    private readonly TextBox dbItemAdd;
+    private readonly TextBox dbItem;
     private readonly TextBox dbQuantity;
 
     public MainMenu()
@@ -25,17 +24,10 @@ public class MainMenu : Form
         myLabel.AutoSize = true;
         this.Controls.Add(myLabel);  
 
-        checkItem = new TextBox();
-        checkItem.Location = new Point(150, 18);
-        checkItem.Width = 200;
-        this.Controls.Add(checkItem);
-
-        Button checkItemBtn = new Button();
-        checkItemBtn.Text = "Check Item";
-        checkItemBtn.Location = new Point(360, 18);
-        checkItemBtn.Width = 75;
-        checkItemBtn.Click += CheckItemExists;
-        this.Controls.Add(checkItemBtn);
+        dbItem = new TextBox();
+        dbItem.Location = new Point(100, 18);
+        dbItem.Width = 100;
+        this.Controls.Add(dbItem);
 
 
         Label addLabel = new Label();
@@ -44,14 +36,21 @@ public class MainMenu : Form
         addLabel.AutoSize = true;
         this.Controls.Add(addLabel);
 
-        dbItemAdd = new TextBox();
-        dbItemAdd.Location = new Point(150, 38);
-        dbItemAdd.AutoSize = true;
-        this.Controls.Add(dbItemAdd);
+        dbQuantity = new TextBox();
+        dbQuantity.Location = new Point(100, 38);
+        dbQuantity.AutoSize = true;
+        this.Controls.Add(dbQuantity);
+
+        Button checkItemBtn = new Button();
+        checkItemBtn.Text = "Check Item";
+        checkItemBtn.Location = new Point(20, 200);
+        checkItemBtn.Width = 75;
+        checkItemBtn.Click += CheckItemExists;
+        this.Controls.Add(checkItemBtn);
 
         Button addItemBtn = new Button();
         addItemBtn.Text = "Add Item";
-        addItemBtn.Location = new Point(360, 38);
+        addItemBtn.Location = new Point(100, 200);
         addItemBtn.Width = 75;
         addItemBtn.Click += AddItemToDatabase;
         this.Controls.Add(addItemBtn);
@@ -153,7 +152,7 @@ public class MainMenu : Form
     {
         string tableName = "GroceryStore";
         string columnName = "Item";
-        string itemText = checkItem.Text.Trim();
+        string itemText = dbItem.Text.Trim();
 
         Label infoLabel = (Label)this.Controls["InformationLabel"];
 
@@ -191,7 +190,7 @@ public class MainMenu : Form
     {
         string tableName = "GroceryStore";
         string itemCol = "Item";
-        string itemText = dbItemAdd.Text.Trim();
+        string itemText = dbItem.Text.Trim();
 
         Label infoLabel = (Label)this.Controls["InformationLabel"];
 
@@ -208,8 +207,14 @@ public class MainMenu : Form
             {
                 AddDBRow(tableName, itemText);
                 Console.WriteLine("New item in database: " + itemText);
+                infoLabel.Text = itemText + " has been added to the database.";
+                infoLabel.BackColor = Color.Green;
             }
-            int itemCount = GetItemCount(tableName, itemText);
+            else
+            {
+                infoLabel.Text = itemText + " is already present in the database";
+                infoLabel.BackColor = Color.Yellow;
+            }
         }
         catch (Exception ex)
         {
