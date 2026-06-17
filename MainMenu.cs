@@ -74,7 +74,7 @@ public class MainMenu : Form
         removeItemBtn.Text = "Remove Item";
         removeItemBtn.Location = new Point(340, 100);
         removeItemBtn.Width = 75;
-        removeItemBtn.Click = RemoveItemFromDatabase;
+        removeItemBtn.Click += RemoveItemFromDatabase;
         this.Controls.Add(removeItemBtn);
 
         Label label2 = new Label
@@ -171,6 +171,18 @@ public class MainMenu : Form
         }
     }
 
+    private void DeleteDBRow(String tableName, String itemText)
+    {
+        String query = $"DELETE FROM [{tableName}] WHERE Item = ?";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@item", itemText);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+    }
+
     private void CheckItemExists(object sender, EventArgs e)
     {
         string tableName = "GroceryStore";
@@ -223,6 +235,13 @@ public class MainMenu : Form
             infoLabel.BackColor = Color.Yellow;
             return;
         }
+
+        if (string.IsNullOrWhiteSpace(itemText))
+        {
+            infoLabel.Text = "Please enter an item name.";
+            infoLabel.BackColor = Color.Yellow;
+            return;
+        }
         try
         {
             bool exists = DoesItemExist(tableName, itemCol, itemText);
@@ -254,6 +273,13 @@ public class MainMenu : Form
         String itemCol = "Item";
 
         Label infoLabel = (Label)this.Controls["InformationLabel"];
+
+        if (string.IsNullOrWhiteSpace(itemText))
+        {
+            infoLabel.Text = "Please enter an item name.";
+            infoLabel.BackColor = Color.Yellow;
+            return;
+        }
 
         try
         {
@@ -292,6 +318,13 @@ public class MainMenu : Form
 
         Label infoLabel = (Label)this.Controls["InformationLabel"];
 
+        if (string.IsNullOrWhiteSpace(itemText))
+        {
+            infoLabel.Text = "Please enter an item name.";
+            infoLabel.BackColor = Color.Yellow;
+            return;
+        }
+
         try
         {
             bool exists = DoesItemExist(tableName, itemCol, itemText);
@@ -329,6 +362,13 @@ public class MainMenu : Form
 
         Label infoLabel = (Label)this.Controls["InformationLabel"];
 
+        if (string.IsNullOrWhiteSpace(itemText))
+        {
+            infoLabel.Text = "Please enter an item name.";
+            infoLabel.BackColor = Color.Yellow;
+            return;
+        }
+
         try
         {
             bool exists = DoesItemExist(tableName, itemCol, itemText);
@@ -339,7 +379,22 @@ public class MainMenu : Form
             }
             else
             {
-                
+                DialogResult confirmation = MessageBox.Show(
+                    $"Are you sure you want to permanently delete '{itemText}' from the database?",
+                    "Confirm Delete",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Warning);
+
+                if (confirmation != DialogResult.Yes)
+                {
+                    infoLabel.Text = "Item deletion canceled.";
+                    infoLabel.BackColor = Color.LightGoldenrodYellow;
+                    return;
+                }
+
+                DeleteDBRow(tableName, itemText);
+                infoLabel.Text = itemText + " has been removed from the database.";
+                infoLabel.BackColor = Color.Green;
             }
         }
         catch (Exception ex)
