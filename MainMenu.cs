@@ -45,35 +45,35 @@ public class MainMenu : Form
         Button checkItemBtn = new Button();
         checkItemBtn.Text = "Check Item";
         checkItemBtn.Location = new Point(20, 100);
-        checkItemBtn.Width = 75;
+        checkItemBtn.Width = 85;
         checkItemBtn.Click += CheckItemExists;
         this.Controls.Add(checkItemBtn);
 
         Button addItemBtn = new Button();
         addItemBtn.Text = "Add Item";
-        addItemBtn.Location = new Point(100, 100);
-        addItemBtn.Width = 75;
+        addItemBtn.Location = new Point(105, 100);
+        addItemBtn.Width = 85;
         addItemBtn.Click += AddItemToDatabase;
         this.Controls.Add(addItemBtn);
 
         Button stockItemBtn = new Button();
         stockItemBtn.Text = "Stock Item";
-        stockItemBtn.Location = new Point(180, 100);
-        stockItemBtn.Width = 75;
+        stockItemBtn.Location = new Point(190, 100);
+        stockItemBtn.Width = 85;
         stockItemBtn.Click += StockItemInDatabase;
         this.Controls.Add(stockItemBtn);
 
         Button sellItemBtn = new Button();
         sellItemBtn.Text = "Sell Item";
-        sellItemBtn.Location = new Point(260, 100);
-        sellItemBtn.Width = 75;
+        sellItemBtn.Location = new Point(275, 100);
+        sellItemBtn.Width = 85;
         sellItemBtn.Click += SellItemInDatabase;
         this.Controls.Add(sellItemBtn);
 
         Button removeItemBtn = new Button();
         removeItemBtn.Text = "Remove Item";
-        removeItemBtn.Location = new Point(340, 100);
-        removeItemBtn.Width = 75;
+        removeItemBtn.Location = new Point(360, 100);
+        removeItemBtn.Width = 85;
         removeItemBtn.Click += RemoveItemFromDatabase;
         this.Controls.Add(removeItemBtn);
 
