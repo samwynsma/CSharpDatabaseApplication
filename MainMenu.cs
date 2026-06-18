@@ -11,7 +11,7 @@ public class MainMenu : Form
     public MainMenu()
     {
         this.Text = "Test form.";
-        this.Size = new Size(500, 300);
+        this.Size = new Size(500, 350);
         this.StartPosition = FormStartPosition.CenterScreen;
 
         Label myLabel = new Label();
@@ -41,36 +41,43 @@ public class MainMenu : Form
         checkItemBtn.Text = "Check Item";
         checkItemBtn.Location = new Point(20, 100);
         checkItemBtn.Width = 85;
-        checkItemBtn.Click += CheckItemExists;
+        checkItemBtn.Click += new EventHandler(CheckItemExists);
         this.Controls.Add(checkItemBtn);
 
         Button addItemBtn = new Button();
         addItemBtn.Text = "Add Item";
         addItemBtn.Location = new Point(105, 100);
         addItemBtn.Width = 85;
-        addItemBtn.Click += AddItemToDatabase;
+        addItemBtn.Click += new EventHandler(AddItemToDatabase);
         this.Controls.Add(addItemBtn);
 
         Button stockItemBtn = new Button();
         stockItemBtn.Text = "Stock Item";
         stockItemBtn.Location = new Point(190, 100);
         stockItemBtn.Width = 85;
-        stockItemBtn.Click += StockItemInDatabase;
+        stockItemBtn.Click += new EventHandler(StockItemInDatabase);
         this.Controls.Add(stockItemBtn);
 
         Button sellItemBtn = new Button();
         sellItemBtn.Text = "Sell Item";
         sellItemBtn.Location = new Point(275, 100);
         sellItemBtn.Width = 85;
-        sellItemBtn.Click += SellItemInDatabase;
+        sellItemBtn.Click += new EventHandler(SellItemInDatabase);
         this.Controls.Add(sellItemBtn);
 
         Button removeItemBtn = new Button();
         removeItemBtn.Text = "Remove Item";
         removeItemBtn.Location = new Point(360, 100);
         removeItemBtn.Width = 85;
-        removeItemBtn.Click += RemoveItemFromDatabase;
+        removeItemBtn.Click += new EventHandler(RemoveItemFromDatabase);
         this.Controls.Add(removeItemBtn);
+
+        Button closeProgramBtn = new Button();
+        closeProgramBtn.Text = "Quit";
+        closeProgramBtn.Location = new Point(200, 250);
+        closeProgramBtn.Width = 85;
+        closeProgramBtn.Click += new EventHandler(CloseProgram);
+        this.Controls.Add(closeProgramBtn);
 
         Label label2 = new Label
         {
@@ -80,6 +87,11 @@ public class MainMenu : Form
             AutoSize = true
         };
         this.Controls.Add(label2);
+    }
+
+    private void CloseProgram(object sender, EventArgs e)
+    {
+        this.Close();
     }
 
 
