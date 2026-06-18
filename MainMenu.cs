@@ -72,6 +72,13 @@ public class MainMenu : Form
         removeItemBtn.Click += new EventHandler(RemoveItemFromDatabase);
         this.Controls.Add(removeItemBtn);
 
+        Button itemCountBtn = new Button();
+        itemCountBtn.Text = "Item Count";
+        itemCountBtn.Location = new Point(20, 140);
+        itemCountBtn.Width = 85;
+        itemCountBtn.Click += new EventHandler(GetItemCount);
+        this.Controls.Add(itemCountBtn);
+
         Button closeProgramBtn = new Button();
         closeProgramBtn.Text = "Quit";
         closeProgramBtn.Location = new Point(200, 250);
@@ -260,6 +267,36 @@ public class MainMenu : Form
 
                 DatabaseHelper.DeleteDBRow(tableName, itemText);
                 ChangeTextAndColor(infoLabel, itemText + " has been removed from the database.", Color.Green);
+            }
+        }
+        catch (Exception ex)
+        {
+            DisplayErrorMessage(ex.Message);
+        }
+    }
+
+    private void GetItemCount(object sender, EventArgs e)
+    {
+        String tableName = "GroceryStore";
+        String itemText = dbItem.Text.Trim();
+        String itemCol = "Item";
+
+        Label infoLabel = (Label)this.Controls["InformationLabel"];
+
+        if(IsTextNull(itemText))
+            return;
+
+        try
+        {
+            bool exists = DatabaseHelper.DoesItemExist(tableName, itemCol, itemText);
+            if(!exists)
+            {
+                ChangeTextAndColor(infoLabel, itemText + " is not present in the database", Color.Yellow);
+            }
+            else
+            {
+                int val = DatabaseHelper.GetItemCount(tableName, itemText);
+                ChangeTextAndColor(infoLabel, "There are " + val + " of the item " + itemText + " in the database.", Color.Green);
             }
         }
         catch (Exception ex)
