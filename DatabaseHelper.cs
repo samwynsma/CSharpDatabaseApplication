@@ -84,14 +84,16 @@ public static class DatabaseHelper
         }
     }
 
-    public static void AddDBRow(string tableName, string itemText)
+    public static void AddDBRow(string tableName, string itemText, decimal cost, string department)
     {
-        string query = $"INSERT INTO [{tableName}] (Item, Quantity) VALUES (?, 0)";
+        string query = $"INSERT INTO [{tableName}] (Item, Quantity, Cost, Department) VALUES (?, 0, ?, ?)";
 
         using (OleDbConnection conn = new OleDbConnection(ConnString))
         using (OleDbCommand cmd = new OleDbCommand(query, conn))
         {
             cmd.Parameters.AddWithValue("@item", itemText);
+            cmd.Parameters.AddWithValue("@cost", cost);
+            cmd.Parameters.AddWithValue("@department", department);
             conn.Open();
             cmd.ExecuteNonQuery();
         }

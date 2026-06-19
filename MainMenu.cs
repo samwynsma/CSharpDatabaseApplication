@@ -7,6 +7,8 @@ public class MainMenu : Form
 {
     private readonly TextBox dbItem;
     private readonly TextBox dbQuantity;
+    private readonly TextBox dbCost;
+    private readonly TextBox dbDepartment;
 
     public MainMenu()
     {
@@ -36,6 +38,30 @@ public class MainMenu : Form
         dbQuantity.Location = new Point(100, 38);
         dbQuantity.AutoSize = true;
         this.Controls.Add(dbQuantity);
+
+        Label costLabel = new Label();
+        costLabel.Text = "Cost: ";
+        costLabel.Location = new Point(10, 60);
+        costLabel.AutoSize = true;
+        this.Controls.Add(costLabel);
+
+        dbCost = new TextBox();
+        dbCost.Location = new Point(100, 58);
+        dbCost.Width = 100;
+        dbCost.KeyPress += new KeyPressEventHandler(DbCost_KeyPress);
+        dbCost.TextChanged += new EventHandler(DbCost_TextChanged);
+        this.Controls.Add(dbCost);
+
+        Label deptLabel = new Label();
+        deptLabel.Text = "Department: ";
+        deptLabel.Location = new Point(10, 80);
+        deptLabel.AutoSize = true;
+        this.Controls.Add(deptLabel);
+
+        dbDepartment = new TextBox();
+        dbDepartment.Location = new Point(100, 78);
+        dbDepartment.Width = 100;
+        this.Controls.Add(dbDepartment);
 
         Button checkItemBtn = new Button();
         checkItemBtn.Text = "Check Item";
@@ -146,9 +172,25 @@ public class MainMenu : Form
         try
         {
             bool exists = DatabaseHelper.DoesItemExist(tableName, itemCol, itemText);
+
+            string costText = dbCost.Text.Trim();
+            string departmentText = dbDepartment.Text.Trim();
+
+            if (String.IsNullOrWhiteSpace(departmentText))
+            {
+                ChangeTextAndColor(infoLabel, "Please enter a department.", Color.Yellow);
+                return;
+            }
+
+            if (!Decimal.TryParse(costText, out decimal costVal) || costVal < 0)
+            {
+                ChangeTextAndColor(infoLabel, "Please enter a valid non-negative cost.", Color.Orange);
+                return;
+            }
+
             if(!exists)
             {
-                DatabaseHelper.AddDBRow(tableName, itemText);
+                DatabaseHelper.AddDBRow(tableName, itemText, costVal, departmentText);
                 Console.WriteLine("New item in database: " + itemText);
                 ChangeTextAndColor(infoLabel, itemText + " has been added to the database.", Color.Green);
             }
@@ -329,6 +371,46 @@ public class MainMenu : Form
     {
         label.Text = text;
         label.BackColor = color;
+    }
+
+    private void DbCost_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        char ch = e.KeyChar;
+
+        // Allow control characters (backspace), digits, and one decimal point
+        if (!char.IsControl(ch) && !char.IsDigit(ch) && ch != '.')
+        {
+            e.Handled = true;
+            return;
+        }
+
+        TextBox tb = sender as TextBox;
+        if (ch == '.' && tb != null && tb.Text.Contains('.'))
+        {
+            // only allow one decimal point
+            e.Handled = true;
+        }
+    }
+
+    private void DbCost_TextChanged(object sender, EventArgs e)
+    {
+        TextBox tb = sender as TextBox;
+        if (tb == null)
+            return;
+
+        string text = tb.Text;
+        int idx = text.IndexOf('.');
+        if (idx >= 0)
+        {
+            int decimals = text.Length - idx - 1;
+            if (decimals > 2)
+            {
+                int sel = tb.SelectionStart;
+                tb.Text = text.Substring(0, idx + 3);
+                // restore caret position as best effort
+                tb.SelectionStart = Math.Min(tb.Text.Length, Math.Max(0, sel - (decimals - 2)));
+            }
+        }
     }
 
     [STAThread]
