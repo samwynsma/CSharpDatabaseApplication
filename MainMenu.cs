@@ -100,10 +100,17 @@ public class MainMenu : Form
 
         Button itemCountBtn = new Button();
         itemCountBtn.Text = "Item Count";
-        itemCountBtn.Location = new Point(20, 140);
+        itemCountBtn.Location = new Point(20, 125);
         itemCountBtn.Width = 85;
         itemCountBtn.Click += new EventHandler(GetItemCount);
         this.Controls.Add(itemCountBtn);
+
+        Button quantityCostBtn = new Button();
+        quantityCostBtn.Text = "Cost to Buy";
+        quantityCostBtn.Location = new Point(105, 125);
+        quantityCostBtn.Width = 85;
+        quantityCostBtn.Click = new EventHandler(GetQuantityCost);
+        this.ControlsAdd(quantityCostBtn);
 
         Button closeProgramBtn = new Button();
         closeProgramBtn.Text = "Quit";
@@ -111,6 +118,9 @@ public class MainMenu : Form
         closeProgramBtn.Width = 85;
         closeProgramBtn.Click += new EventHandler(CloseProgram);
         this.Controls.Add(closeProgramBtn);
+
+        
+
 
         Label label2 = new Label
         {
@@ -347,6 +357,38 @@ public class MainMenu : Form
         }
     }
 
+    private void GetQuantityCost(object sender, EventArgs e)
+    {
+        string tableName = "GroceryStore";
+        string itemText = dbItem.Text.Trim();
+        string itemCol = "Item";
+
+        Label infoLabel = (Label)this.Controls["InformationLabel"];
+
+        if(IsTextNull(itemText))
+            return;
+
+        try
+        {
+            int items = Convert.ToInt32(dbQuantity.Text.Trim());
+
+            bool exists = DatabaseHelper.DoesItemExist(tableName, itemCol, itemText);
+            if(!exists)
+            {
+                ChangeTextAndColor(infoLabel, itemText + " is not present in the database", Color.Yellow);
+            }
+            else
+            {
+                double costTotal = DatabaseHelper.GetCostValue(tableName, itemCol, itemText);
+                ChangeTextAndColor(infoLabel, "The total cost of " + items + " " + itemText + " is " + costTotal + ".", Color.Green);
+            }
+        }
+        catch (Exception ex)
+        {
+            DisplayErrorMessage(ex.Message);
+        }
+    }
+
     private void DisplayErrorMessage(String message)
     {
         Label infoLabel = (Label)this.Controls["InformationLabel"];
@@ -372,6 +414,8 @@ public class MainMenu : Form
         label.Text = text;
         label.BackColor = color;
     }
+
+    
 
     private void DbCost_KeyPress(object sender, KeyPressEventArgs e)
     {
