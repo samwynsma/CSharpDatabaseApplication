@@ -13,9 +13,10 @@ public class MainMenu : Form
     private readonly MainMenuActions actions;
     private readonly UserInfo dbUser;
 
-    public MainMenu()
+    public MainMenu(UserInfo dbUser)
     {
-        this.Text = "Test form.";
+        this.dbUser = dbUser;
+        this.Text = $"Signed in as {dbUser.Username}";
         this.Size = new Size(500, 350);
         this.StartPosition = FormStartPosition.CenterScreen;
 
@@ -188,6 +189,7 @@ public class MainMenu : Form
         Application.EnableVisualStyles();
         Application.SetCompatibleTextRenderingDefault(false);
 
+        UserInfo dbUser;
         using (SignInForm signIn = new SignInForm())
         {
             var dlg = signIn.ShowDialog();
@@ -196,17 +198,21 @@ public class MainMenu : Form
                 // user cancelled sign-in
                 return;
             }
-            if(signIn.IsGuest)
+            if (signIn.IsGuest)
             {
                 dbUser = new UserInfo("Guest", false, false, false, false);
             }
             else
             {
-                dbUser = new UserInfo(signIn.Username, UserDBHelper.GetAdmin(), UserDBHelper.GetAddDelete(), UserDBHelper.GetFireHire(), UserDBHelper.GetAdd());
+                dbUser = new UserInfo(signIn.Username,
+                    UserDBHelper.GetAdmin(signIn.Username),
+                    UserDBHelper.GetAddDelete(signIn.Username),
+                    UserDBHelper.GetFireHire(signIn.Username),
+                    UserDBHelper.GetAdd(signIn.Username)
+                );
             }
-            // If needed, you can inspect signIn.IsGuest or signIn.Username here
         }
-        
-        Application.Run(new MainMenu());
+
+        Application.Run(new MainMenu(dbUser));
     }
 }
