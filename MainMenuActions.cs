@@ -56,7 +56,7 @@ public class MainMenuActions
         const string itemCol = "Item";
         string itemText = dbItem.Text.Trim();
 
-        if (IsTextNull(itemText))
+        if (IsTextNull(itemText) || !CheckAddDeletePriv(infoLabel))
             return;
 
         try
@@ -168,7 +168,7 @@ public class MainMenuActions
         const string itemCol = "Item";
         string itemText = dbItem.Text.Trim();
 
-        if (IsTextNull(itemText))
+        if (IsTextNull(itemText) || !CheckAddDeletePriv(infoLabel))
             return;
 
         try
@@ -310,9 +310,29 @@ public class MainMenuActions
         return false;
     }
 
+    private bool CheckAddDeletePriv(Label label)
+    {
+        if(!dbUser.CanAddDelete)
+        {
+            ChangeTextAndColor(label, "User does not have the authority to add or remove items", Color.OrangeRed);
+        }
+        return dbUser.CanAddDelete;
+    }
+
+    private bool CheckAdmin(Label label)
+    {
+        if(!dbUser.IsAdmin)
+        {
+            ChangeTextAndColor(label, "Admin privelges are required to continue", Color.OrangeRed);
+        }
+        return dbUser.IsAdmin;
+    }
+
     private void ChangeTextAndColor(Label label, string text, Color color)
     {
         label.Text = text;
         label.BackColor = color;
     }
+
+    
 }

@@ -71,7 +71,7 @@ public class MainMenu : Form
         {
             Name = "InformationLabel",
             Text = "",
-            Location = new System.Drawing.Point(150, 200),
+            Location = new System.Drawing.Point(100, 200),
             AutoSize = true
         };
         this.Controls.Add(label2);
