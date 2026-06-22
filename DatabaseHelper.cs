@@ -111,4 +111,27 @@ public static class DatabaseHelper
             cmd.ExecuteNonQuery();
         }
     }
+
+    public static double GetCostValue(string tableName, string itemText, int itemCount)
+    {
+        string query = $"SELECT Cost * ? FROM [{tableName}] WHERE Item = ?";
+
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@itemCount", itemCount);
+            cmd.Parameters.AddWithValue("@item", itemText);
+            conn.Open();
+
+            object result = cmd.ExecuteScalar();
+            double val = 0;
+
+            if (result != null && result != DBNull.Value)
+            {
+                val = Convert.ToDouble(result);
+            }
+
+            return val;
+        }
+    }
 }

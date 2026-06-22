@@ -109,8 +109,8 @@ public class MainMenu : Form
         quantityCostBtn.Text = "Cost to Buy";
         quantityCostBtn.Location = new Point(105, 125);
         quantityCostBtn.Width = 85;
-        quantityCostBtn.Click = new EventHandler(GetQuantityCost);
-        this.ControlsAdd(quantityCostBtn);
+        quantityCostBtn.Click += new EventHandler(GetQuantityCost);
+        this.Controls.Add(quantityCostBtn);
 
         Button closeProgramBtn = new Button();
         closeProgramBtn.Text = "Quit";
@@ -379,8 +379,8 @@ public class MainMenu : Form
             }
             else
             {
-                double costTotal = DatabaseHelper.GetCostValue(tableName, itemCol, itemText);
-                ChangeTextAndColor(infoLabel, "The total cost of " + items + " " + itemText + " is " + costTotal + ".", Color.Green);
+                double costTotal = DatabaseHelper.GetCostValue(tableName, itemText, items);
+                ChangeTextAndColor(infoLabel, "The total cost of " + items + " " + itemText + " is " + costTotal.ToString("C2") + ".", Color.Green);
             }
         }
         catch (Exception ex)
