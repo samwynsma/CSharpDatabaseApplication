@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -9,14 +10,16 @@ public class MainMenuActions
     private readonly TextBox dbCost;
     private readonly TextBox dbDepartment;
     private readonly Label infoLabel;
+    private readonly UserInfo dbUser;
 
-    public MainMenuActions(TextBox dbItem, TextBox dbQuantity, TextBox dbCost, TextBox dbDepartment, Label infoLabel)
+    public MainMenuActions(TextBox dbItem, TextBox dbQuantity, TextBox dbCost, TextBox dbDepartment, Label infoLabel, UserInfo dbUser)
     {
         this.dbItem = dbItem;
         this.dbQuantity = dbQuantity;
         this.dbCost = dbCost;
         this.dbDepartment = dbDepartment;
         this.infoLabel = infoLabel;
+        this.dbUser = dbUser;
     }
 
     public void CheckItemExists(object sender, EventArgs e)
@@ -250,6 +253,44 @@ public class MainMenuActions
         catch (Exception ex)
         {
             DisplayErrorMessage(ex.Message);
+        }
+    }
+
+    public void GetPriveleges(object sender, EventArgs e)
+    {
+        List<string> privs = new List<string>();
+        if(dbUser.IsAdmin)
+        {
+            privs.Add("Admin");
+        }
+        if(dbUser.HasAddedPrivs)
+        {
+            privs.Add("Additional");
+        }
+        if(dbUser.CanAddDelete)
+        {
+            privs.Add("Add/Remove Items");
+        }
+        if(dbUser.CanHireFire)
+        {
+            privs.Add("Fire/Hire");
+        }
+        if(privs.Count == 0)
+        {
+            ChangeTextAndColor(infoLabel, "This user has no privleges.", Color.Orange);
+        }
+        else
+        {
+            String privStr = "This user has the following privleges: ";
+            for(int i = 0; i < privs.Count; i++)
+            {
+                privStr += privs[i];
+                if(i + 1 < privs.Count)
+                {
+                    privStr += ", ";
+                }
+            }
+            ChangeTextAndColor(infoLabel, privStr, Color.Green);
         }
     }
 

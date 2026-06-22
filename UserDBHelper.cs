@@ -8,7 +8,7 @@ public class UserDBHelper
 
     public static bool GetAdmin(String userName)
     {
-        String query = $"SELECT Admin FROM [Users] WHERE Username = ?";
+        String query = $"SELECT Admin FROM [Users] WHERE [Username] = ?";
         using (OleDbConnection conn = new OleDbConnection(ConnString))
         using (OleDbCommand cmd = new OleDbCommand(query, conn))
         {
@@ -20,7 +20,7 @@ public class UserDBHelper
 
             if (result != null && result != DBNull.Value)
             {
-                if (string.Equals(result.ToString(), "YES", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(result.ToString(), "true", StringComparison.OrdinalIgnoreCase))
                     isAdmin = true;
             }
 
@@ -30,7 +30,7 @@ public class UserDBHelper
 
     public static bool GetAddDelete(string userName)
     {
-        String query = $"SELECT AddDeletePriv FROM [Users] WHERE Username = ?";
+        String query = $"SELECT AddDeletePriv FROM [Users] WHERE [Username] = ?";
         using (OleDbConnection conn = new OleDbConnection(ConnString))
         using (OleDbCommand cmd = new OleDbCommand(query, conn))
         {
@@ -42,7 +42,7 @@ public class UserDBHelper
 
             if (result != null && result != DBNull.Value)
             {
-                if (string.Equals(result.ToString(), "YES", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(result.ToString(), "true", StringComparison.OrdinalIgnoreCase))
                     isAddDel = true;
             }
 
@@ -52,7 +52,7 @@ public class UserDBHelper
 
     public static bool GetFireHire(string userName)
     {
-        String query = $"SELECT FireHire FROM [Users] WHERE Username = ?";
+        String query = $"SELECT FireHire FROM [Users] WHERE [Username] = ?";
         using (OleDbConnection conn = new OleDbConnection(ConnString))
         using (OleDbCommand cmd = new OleDbCommand(query, conn))
         {
@@ -64,7 +64,7 @@ public class UserDBHelper
 
             if (result != null && result != DBNull.Value)
             {
-                if (string.Equals(result.ToString(), "YES", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(result.ToString(), "true", StringComparison.OrdinalIgnoreCase))
                     isFireHire = true;
             }
 
@@ -74,7 +74,7 @@ public class UserDBHelper
 
     public static bool GetAdd(string userName)
     {
-        String query = $"SELECT Additional FROM [Users] WHERE Username = ?";
+        String query = $"SELECT Additional FROM [Users] WHERE [Username] = ?";
         using (OleDbConnection conn = new OleDbConnection(ConnString))
         using (OleDbCommand cmd = new OleDbCommand(query, conn))
         {
@@ -86,7 +86,7 @@ public class UserDBHelper
 
             if (result != null && result != DBNull.Value)
             {
-                if (string.Equals(result.ToString(), "YES", StringComparison.OrdinalIgnoreCase))
+                if (string.Equals(result.ToString(), "true", StringComparison.OrdinalIgnoreCase))
                     isAddit = true;
             }
 

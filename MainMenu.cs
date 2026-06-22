@@ -76,7 +76,7 @@ public class MainMenu : Form
         };
         this.Controls.Add(label2);
 
-        actions = new MainMenuActions(dbItem, dbQuantity, dbCost, dbDepartment, label2);
+        actions = new MainMenuActions(dbItem, dbQuantity, dbCost, dbDepartment, label2, dbUser);
 
         Button checkItemBtn = new Button();
         checkItemBtn.Text = "Check Item";
@@ -127,12 +127,20 @@ public class MainMenu : Form
         quantityCostBtn.Click += new EventHandler(actions.GetQuantityCost);
         this.Controls.Add(quantityCostBtn);
 
+        Button ShowPrivelegesBtn = new Button();
+        ShowPrivelegesBtn.Text = "Priveleges";
+        ShowPrivelegesBtn.Location = new Point(190, 125);
+        ShowPrivelegesBtn.Width = 85;
+        ShowPrivelegesBtn.Click += new EventHandler(actions.GetPriveleges);
+        this.Controls.Add(ShowPrivelegesBtn);
+
         Button closeProgramBtn = new Button();
         closeProgramBtn.Text = "Quit";
         closeProgramBtn.Location = new Point(200, 250);
         closeProgramBtn.Width = 85;
         closeProgramBtn.Click += new EventHandler(CloseProgram);
         this.Controls.Add(closeProgramBtn);
+
 
     }
 
