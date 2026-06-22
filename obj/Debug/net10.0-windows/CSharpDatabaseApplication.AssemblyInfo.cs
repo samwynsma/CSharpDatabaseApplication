@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CSharpDatabaseApplication")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9015576e21aab29d9e9de296c73bb3a6611fb58f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fc3fc91c268bdd8b9a4a8a011f17c260dc5d3cce")]
 [assembly: System.Reflection.AssemblyProductAttribute("CSharpDatabaseApplication")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CSharpDatabaseApplication")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
