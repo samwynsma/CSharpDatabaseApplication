@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+using Microsoft.VisualBasic.ApplicationServices;
 
 public class MainMenu : Form
 {
@@ -10,6 +11,7 @@ public class MainMenu : Form
     private readonly TextBox dbCost;
     private readonly TextBox dbDepartment;
     private readonly MainMenuActions actions;
+    private readonly UserInfo dbUser;
 
     public MainMenu()
     {
@@ -184,6 +186,27 @@ public class MainMenu : Form
     {
 
         Application.EnableVisualStyles();
+        Application.SetCompatibleTextRenderingDefault(false);
+
+        using (SignInForm signIn = new SignInForm())
+        {
+            var dlg = signIn.ShowDialog();
+            if (dlg != DialogResult.OK)
+            {
+                // user cancelled sign-in
+                return;
+            }
+            if(signIn.IsGuest)
+            {
+                dbUser = new UserInfo("Guest", false, false, false, false);
+            }
+            else
+            {
+                dbUser = new UserInfo(signIn.Username, UserDBHelper.GetAdmin(), UserDBHelper.GetAddDelete(), UserDBHelper.GetFireHire(), UserDBHelper.GetAdd());
+            }
+            // If needed, you can inspect signIn.IsGuest or signIn.Username here
+        }
+        
         Application.Run(new MainMenu());
     }
 }

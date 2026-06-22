@@ -134,4 +134,27 @@ public static class DatabaseHelper
             return val;
         }
     }
+
+    public static bool AuthenticateUser(string username, string password)
+    {
+        string query = "SELECT COUNT(*) FROM [Users] WHERE [Username] = ? AND [Password] = ?";
+
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@username", username);
+            cmd.Parameters.AddWithValue("@password", password);
+            conn.Open();
+
+            object result = cmd.ExecuteScalar();
+            int count = 0;
+
+            if (result != null && result != DBNull.Value)
+            {
+                count = Convert.ToInt32(result);
+            }
+
+            return count > 0;
+        }
+    }
 }
