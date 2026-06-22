@@ -64,10 +64,17 @@ public class MainMenuActions
             bool exists = DatabaseHelper.DoesItemExist(tableName, itemCol, itemText);
             string costText = dbCost.Text.Trim();
             string departmentText = dbDepartment.Text.Trim();
+            bool departmentExists = DepartmentHelper.HasDepartment(departmentText);
 
             if (String.IsNullOrWhiteSpace(departmentText))
             {
                 ChangeTextAndColor(infoLabel, "Please enter a department.", Color.Yellow);
+                return;
+            }
+
+            if(!departmentExists)
+            {
+                ChangeTextAndColor(infoLabel, "The department that you entered does not exist.", Color.Yellow);
                 return;
             }
 

@@ -1,7 +1,7 @@
 using System;
 using System.Data.OleDb;
 
-public class UserDBHelper
+public static class UserDBHelper
 {
     private static readonly string DBPath = @"TestDatabase.accdb";
     private static readonly string ConnString = $@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source={DBPath};Persist Security Info=False;";
