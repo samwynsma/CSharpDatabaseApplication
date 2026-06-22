@@ -28,18 +28,69 @@ public class UserDBHelper
         }
     }
 
-    public static bool GetAdd(string username)
+    public static bool GetAddDelete(string userName)
     {
-        return false;
+        String query = $"SELECT AddDeletePriv FROM [Users] WHERE Username = ?";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@item", userName);
+            conn.Open();
+
+            object result = cmd.ExecuteScalar();
+            bool isAddDel = false;
+
+            if (result != null && result != DBNull.Value)
+            {
+                if (string.Equals(result.ToString(), "YES", StringComparison.OrdinalIgnoreCase))
+                    isAddDel = true;
+            }
+
+            return isAddDel;
+        }
     }
 
-    public static bool GetAddDelete(string username)
+    public static bool GetFireHire(string userName)
     {
-        return false;
+        String query = $"SELECT FireHire FROM [Users] WHERE Username = ?";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@item", userName);
+            conn.Open();
+
+            object result = cmd.ExecuteScalar();
+            bool isFireHire = false;
+
+            if (result != null && result != DBNull.Value)
+            {
+                if (string.Equals(result.ToString(), "YES", StringComparison.OrdinalIgnoreCase))
+                    isFireHire = true;
+            }
+
+            return isFireHire;
+        }
     }
 
-    public static bool GetFireHire(string username)
+    public static bool GetAdd(string userName)
     {
-        return false;
+        String query = $"SELECT Additional FROM [Users] WHERE Username = ?";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@item", userName);
+            conn.Open();
+
+            object result = cmd.ExecuteScalar();
+            bool isAddit = false;
+
+            if (result != null && result != DBNull.Value)
+            {
+                if (string.Equals(result.ToString(), "YES", StringComparison.OrdinalIgnoreCase))
+                    isAddit = true;
+            }
+
+            return isAddit;
+        }
     }
 }
