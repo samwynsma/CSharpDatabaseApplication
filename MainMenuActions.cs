@@ -301,6 +301,16 @@ public class MainMenuActions
         }
     }
 
+    public void OpenDepartments(object sender, EventArgs e)
+    {
+        if(!dbUser.IsAdmin)
+        {
+            ChangeTextAndColor(infoLabel, "You do not have permission to do that.", Color.OrangeRed);
+            return;
+        }
+        new DepartmentsMenu(dbUser).ShowDialog();
+    }
+
     private void DisplayErrorMessage(string message)
     {
         Console.WriteLine("Unexpected error: " + message);
@@ -341,5 +351,4 @@ public class MainMenuActions
         label.BackColor = color;
     }
 
-    
 }

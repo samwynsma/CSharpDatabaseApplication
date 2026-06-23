@@ -134,6 +134,13 @@ public class MainMenu : Form
         ShowPrivelegesBtn.Click += new EventHandler(actions.GetPriveleges);
         this.Controls.Add(ShowPrivelegesBtn);
 
+        Button OpenDepartmentsBtn = new Button();
+        OpenDepartmentsBtn.Text = "Department Info";
+        OpenDepartmentsBtn.Location = new Point(20, 150);
+        OpenDepartmentsBtn.Width = 100;
+        OpenDepartmentsBtn.Click += new EventHandler(actions.OpenDepartments);
+        this.Controls.Add(OpenDepartmentsBtn);
+
         Button closeProgramBtn = new Button();
         closeProgramBtn.Text = "Quit";
         closeProgramBtn.Location = new Point(200, 250);
