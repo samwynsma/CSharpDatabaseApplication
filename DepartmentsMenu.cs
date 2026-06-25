@@ -8,6 +8,7 @@ public class DepartmentsMenu : Form
 {
     private readonly UserInfo dbUser;
     private readonly TextBox dbDepartment;
+    private readonly TextBox resultsBox;
     private readonly DepartmentsMenuActions actions;
     public DepartmentsMenu(UserInfo dbUser)
     {
@@ -27,7 +28,17 @@ public class DepartmentsMenu : Form
         dbDepartment.Width = 100;
         this.Controls.Add(dbDepartment);
 
-        actions = new DepartmentsMenuActions(dbDepartment, dbUser);
+        // Results box: multiline, read-only, vertical scrollbar
+        resultsBox = new TextBox();
+        resultsBox.Location = new Point(10, 140);
+        resultsBox.Size = new Size(460, 300);
+        resultsBox.Multiline = true;
+        resultsBox.ScrollBars = ScrollBars.Vertical;
+        resultsBox.ReadOnly = true;
+        resultsBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        this.Controls.Add(resultsBox);
+
+        actions = new DepartmentsMenuActions(dbDepartment, resultsBox, dbUser);
 
         Button addDptButton = new Button();
         addDptButton.Text = "Add Department";
@@ -42,5 +53,12 @@ public class DepartmentsMenu : Form
         getItemDetailsBtn.Width = 85;
         getItemDetailsBtn.Click += new EventHandler(actions.GetDatabaseItems);
         this.Controls.Add(getItemDetailsBtn);
+
+        Button dptListBtn = new Button();
+        dptListBtn.Text = "Department List";
+        dptListBtn.Location = new Point(190, 100);
+        dptListBtn.Width = 85;
+        dptListBtn.Click += new EventHandler(actions.GetDepartmentList);
+        this.Controls.Add(dptListBtn);
     }
 }
