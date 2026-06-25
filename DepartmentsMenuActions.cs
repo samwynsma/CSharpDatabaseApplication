@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 class DepartmentsMenuActions
@@ -16,8 +18,20 @@ class DepartmentsMenuActions
 
     public void AddDepartment(object sender, EventArgs e)
     {
-        resultsBox.Clear();
-        resultsBox.AppendText("AddDepartment: not implemented yet.\r\n");
+        string dptText = dbDepartment.Text.Trim();
+
+        if (IsTextNull(dptText))
+            return;
+
+        if(DepartmentHelper.HasDepartment(dptText))
+        {
+            ChangeTextAndColor(resultsBox, "That department already exists", Color.OrangeRed);
+        }
+        else
+        {
+            DepartmentHelper.AddDepartment(dptText);
+            ChangeTextAndColor(resultsBox, "Successfully added department", Color.Green);
+        }
     }
 
     public void GetDatabaseItems(object sender, EventArgs e)
@@ -28,7 +42,24 @@ class DepartmentsMenuActions
 
     public void GetDepartmentList(object sender, EventArgs e)
     {
-        resultsBox.Clear();
+        List<String> departments = DepartmentHelper.GetDepartments();
         resultsBox.AppendText("GetDepartmentList: department list would appear here.\r\n");
+    }
+
+    private bool IsTextNull(string text)
+    {
+        if (String.IsNullOrWhiteSpace(text))
+        {
+            ChangeTextAndColor(resultsBox, "Please enter a database name.", Color.Yellow);
+            return true;
+        }
+        return false;
+    }
+
+    private void ChangeTextAndColor(TextBox results, string text, Color color)
+    {
+        results.Clear();
+        results.ForeColor = color;
+        results.AppendText(text);
     }
 }

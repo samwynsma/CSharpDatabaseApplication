@@ -51,4 +51,16 @@ public static class DepartmentHelper
             return count > 0;
         }
     }
+
+    public static void AddDepartment(string departmentText)
+    {
+        String query = "INSERT INTO [Department] (Department, Head) VALUES (?, null)";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@department", departmentText);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+    }
 }
