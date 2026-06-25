@@ -26,5 +26,21 @@ public class DepartmentsMenu : Form
         dbDepartment.Location = new Point(100, 18);
         dbDepartment.Width = 100;
         this.Controls.Add(dbDepartment);
+
+        actions = new DepartmentsMenuActions(dbDepartment, dbUser);
+
+        Button addDptButton = new Button();
+        addDptButton.Text = "Add Department";
+        addDptButton.Location = new Point(20, 100);
+        addDptButton.Width = 85;
+        addDptButton.Click += new EventHandler(actions.AddDepartment);
+        this.Controls.Add(addDptButton);
+
+        Button getItemDetailsBtn = new Button();
+        getItemDetailsBtn.Text = "Department Items";
+        getItemDetailsBtn.Location = new Point(105, 100);
+        getItemDetailsBtn.Width = 85;
+        getItemDetailsBtn.Click += new EventHandler(actions.GetDatabaseItems);
+        this.Controls.Add(getItemDetailsBtn);
     }
 }
