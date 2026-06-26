@@ -63,4 +63,29 @@ public static class DepartmentHelper
             cmd.ExecuteNonQuery();
         }
     }
+
+    public static List<string> GetDepartmentItems(string departmentText)
+    {
+        String query = "SELECT Item, Quantity, Cost FROM [GroceryStore] WHERE [Department] = ?";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@department", departmentText);
+            conn.Open();
+
+            List<string> items = new List<string>();
+            using (OleDbDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    string itemName = reader.IsDBNull(0) ? string.Empty : reader.GetString(0).Trim();
+                    int quantity = reader.IsDBNull(1) ? 0 : Convert.ToInt32(reader.GetValue(1));
+                    decimal price = reader.IsDBNull(2) ? 0m : Convert.ToDecimal(reader.GetValue(2));
+                    items.Add($"{itemName} | Qty: {quantity} | Cost: {price:C}");
+                }
+            }
+
+            return items;
+        }
+    }
 }
