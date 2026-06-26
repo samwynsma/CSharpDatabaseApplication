@@ -148,7 +148,6 @@ public class MainMenu : Form
         closeProgramBtn.Click += new EventHandler(CloseProgram);
         this.Controls.Add(closeProgramBtn);
 
-
     }
 
     private void CloseProgram(object sender, EventArgs e)
