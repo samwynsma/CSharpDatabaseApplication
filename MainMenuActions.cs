@@ -311,6 +311,11 @@ public class MainMenuActions
         new DepartmentsMenu(dbUser).ShowDialog();
     }
 
+    public void OpenEmployees(object sender, EventArgs e)
+    {
+        return;
+    }
+
     private void DisplayErrorMessage(string message)
     {
         Console.WriteLine("Unexpected error: " + message);
@@ -351,4 +356,5 @@ public class MainMenuActions
         label.BackColor = color;
     }
 
+    
 }

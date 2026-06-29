@@ -70,6 +70,11 @@ class DepartmentsMenuActions
         resultsBox.AppendText("GetDepartmentList: department list would appear here.\r\n");
     }
 
+    public void GetDepartmentHead(object sender, EventArgs e)
+    {
+        return;
+    }
+
     private bool IsTextNull(string text)
     {
         if (String.IsNullOrWhiteSpace(text))

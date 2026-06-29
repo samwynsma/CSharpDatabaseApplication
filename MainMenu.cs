@@ -135,11 +135,18 @@ public class MainMenu : Form
         this.Controls.Add(ShowPrivelegesBtn);
 
         Button OpenDepartmentsBtn = new Button();
-        OpenDepartmentsBtn.Text = "Department Info";
+        OpenDepartmentsBtn.Text = "Dpt Info";
         OpenDepartmentsBtn.Location = new Point(20, 150);
         OpenDepartmentsBtn.Width = 100;
         OpenDepartmentsBtn.Click += new EventHandler(actions.OpenDepartments);
         this.Controls.Add(OpenDepartmentsBtn);
+
+        Button openEmployeesBtn = new Button();
+        openEmployeesBtn.Text = "Emp Info";
+        openEmployeesBtn.Location = new Point(120, 150);
+        openEmployeesBtn.Width = 100;
+        openEmployeesBtn.Click += new EventHandler(actions.OpenEmployees);
+        this.Controls.Add(openEmployeesBtn);
 
         Button closeProgramBtn = new Button();
         closeProgramBtn.Text = "Quit";
@@ -214,7 +221,7 @@ public class MainMenu : Form
             }
             if (signIn.IsGuest)
             {
-                dbUser = new UserInfo("Guest", false, false, false, false);
+                dbUser = new UserInfo("Guest", false, false, false, false, false);
             }
             else
             {
@@ -222,7 +229,8 @@ public class MainMenu : Form
                     UserDBHelper.GetAdmin(signIn.Username),
                     UserDBHelper.GetAddDelete(signIn.Username),
                     UserDBHelper.GetFireHire(signIn.Username),
-                    UserDBHelper.GetAdd(signIn.Username)
+                    UserDBHelper.GetAdd(signIn.Username),
+                    UserDBHelper.GetUserPrivs(signIn.Username)
                 );
             }
         }

@@ -61,6 +61,13 @@ public class DepartmentsMenu : Form
         dptListBtn.Click += new EventHandler(actions.GetDepartmentList);
         this.Controls.Add(dptListBtn);
 
+        Button dptHeadBtn = new Button();
+        dptHeadBtn.Text = "Dpt Head";
+        dptHeadBtn.Location = new Point(275, 100);
+        dptHeadBtn.Width = 85;
+        dptHeadBtn.Click += new EventHandler(actions.GetDepartmentHead);
+        this.Controls.Add(dptHeadBtn);
+
         Button closePageBtn = new Button();
         closePageBtn.Text = "Close";
         closePageBtn.Location = new Point(200, 460);

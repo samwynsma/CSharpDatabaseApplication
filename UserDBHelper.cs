@@ -93,4 +93,26 @@ public static class UserDBHelper
             return isAddit;
         }
     }
+
+    public static bool GetUserPrivs(string userName)
+    {
+        String query = $"SELECT ChangeUser FROM [Users] WHERE [Username] = ?";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@item", userName);
+            conn.Open();
+
+            object result = cmd.ExecuteScalar();
+            bool isUP = false;
+
+            if (result != null && result != DBNull.Value)
+            {
+                if (string.Equals(result.ToString(), "true", StringComparison.OrdinalIgnoreCase))
+                    isUP = true;
+            }
+
+            return isUP;
+        }
+    }
 }
