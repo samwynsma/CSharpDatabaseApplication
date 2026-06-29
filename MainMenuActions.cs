@@ -305,7 +305,7 @@ public class MainMenuActions
     {
         if(!dbUser.IsAdmin)
         {
-            ChangeTextAndColor(infoLabel, "You do not have permission to do that.", Color.OrangeRed);
+            ChangeTextAndColor(infoLabel, "You do not have permission to access departments.", Color.OrangeRed);
             return;
         }
         new DepartmentsMenu(dbUser).ShowDialog();
