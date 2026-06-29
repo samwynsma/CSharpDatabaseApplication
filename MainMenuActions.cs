@@ -313,7 +313,12 @@ public class MainMenuActions
 
     public void OpenEmployees(object sender, EventArgs e)
     {
-        return;
+        if(!dbUser.CanHireFire)
+        {
+            ChangeTextAndColor(infoLabel, "You do not have permission to access employee info.", Color.OrangeRed);
+            return;
+        }
+        new EmployeesMenu(dbUser).ShowDialog();
     }
 
     private void DisplayErrorMessage(string message)
