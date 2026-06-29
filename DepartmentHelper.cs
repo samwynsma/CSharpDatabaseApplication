@@ -88,4 +88,24 @@ public static class DepartmentHelper
             return items;
         }
     }
+
+    internal static string GetHead(string dptText)
+    {
+        String query = "SELECT Head FROM [Department] AS D WHERE [D.Department] = ?";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@department", dptText);
+            conn.Open();
+
+            object result = cmd.ExecuteScalar();
+            String dptHead = "";
+
+            if (result != null && result != DBNull.Value)
+            {
+                dptHead = Convert.ToString(result);
+            }
+            return dptHead;
+        }
+    }
 }

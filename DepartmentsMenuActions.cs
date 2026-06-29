@@ -53,7 +53,7 @@ class DepartmentsMenuActions
 
         if (databaseItemInformation.Count == 0)
         {
-            resultsBox.AppendText("No items found for that department.");
+            ChangeTextAndColor(resultsBox, "No items found for that department", Color.OrangeRed);
             return;
         }
 
@@ -79,7 +79,18 @@ class DepartmentsMenuActions
 
     public void GetDepartmentHead(object sender, EventArgs e)
     {
-        return;
+        String dptText = dbDepartment.Text.Trim();
+        if (IsTextNull(dptText))
+            return;
+        if(!DepartmentHelper.HasDepartment(dptText))
+        {
+            ChangeTextAndColor(resultsBox, "Department does not exist. Cannot get items from it.", Color.OrangeRed);
+            return;
+        }
+
+        String head = DepartmentHelper.GetHead(dptText);
+        resultsBox.Clear();
+        ChangeTextAndColor(resultsBox, head, Color.Black);
     }
 
     private bool IsTextNull(string text)
@@ -95,7 +106,7 @@ class DepartmentsMenuActions
     private void ChangeTextAndColor(TextBox results, string text, Color color)
     {
         results.Clear();
-        results.ForeColor = color;
         results.AppendText(text);
+        results.ForeColor = color;
     }
 }
