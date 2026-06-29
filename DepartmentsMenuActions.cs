@@ -67,7 +67,14 @@ class DepartmentsMenuActions
     {
         resultsBox.Clear();
         List<String> departments = DepartmentHelper.GetDepartments();
-        resultsBox.AppendText("GetDepartmentList: department list would appear here.\r\n");
+        String textToAdd = "List of departments: \n";
+        for(int i = 0; i < departments.Count; i++)
+        {
+            textToAdd += departments[i];
+            if(i + 1 < departments.Count)
+                textToAdd += ", ";
+        }
+        resultsBox.AppendText(textToAdd + "\r\n");
     }
 
     public void GetDepartmentHead(object sender, EventArgs e)

@@ -7,10 +7,16 @@ Update: Login system has been added and now has its own table in the database.
 
 Update: Login permissions have been added and now some of these permissions are active.
 
+Update: New table in the database now exists with relevant employee information.
+
 TODO: Add new menu in GUI to allow an administrative user to add new departments to the store, see what is currently in the departments, and see who is the leader of a department.
 
 TODO: Add new menu in GUI to allow a user with hiring/firing privileges to check employee information, salary, and status and to do what they can.
 
-TODO: Add new table to the database with relevant employee information.
-
 TODO: Add employee objects to application.
+
+TODO: Allow the creation of new users, either through the a special admin only section or at a base level.
+
+TODO: Allow the adjustment of user priveleges for certain users that can only be done with the assistance of a user of high enough rank.
+
+TODO: Sanitize all inputs in the application.
