@@ -10,7 +10,7 @@ public static class EmployeeHelper
 
     public static List<String> GetAllEmployees()
     {
-        String query = "SELECT FirstName, LastName FROM [Employee]"
+        String query = "SELECT FirstName, LastName FROM [Employee]";
         using (OleDbConnection conn = new OleDbConnection(ConnString))
         using (OleDbCommand cmd = new OleDbCommand(query, conn))
         {
@@ -23,7 +23,7 @@ public static class EmployeeHelper
                 {
                     if (!reader.IsDBNull(0))
                     {
-                        dptList.Add(reader.GetString(0).Trim() + " " + reader.GetString(1).Trim());
+                        empList.Add(reader.GetString(0).Trim() + " " + reader.GetString(1).Trim());
                     }
                 }
             }

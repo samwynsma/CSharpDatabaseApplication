@@ -37,7 +37,7 @@ public class EmployeesMenuActions
         resultsBox.AppendText("List of employees: " + Environment.NewLine);
         for(int i = 0; i < employees.Count; i++)
         {
-            resultsBox.AppendText(employees.get(i) + Environment.NewLine);
+            resultsBox.AppendText(employees[i] + Environment.NewLine);
         }
     }
 
