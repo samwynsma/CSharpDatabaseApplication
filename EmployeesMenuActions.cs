@@ -27,6 +27,34 @@ public class EmployeesMenuActions
 
     public void GetAllEmployees(object sender, EventArgs e)
     {
-        return;
+        resultsBox.Clear();
+        List<String> employees = EmployeeHelper.GetAllEmployees();
+        if(employees.Count == 0)
+        {
+            ChangeTextAndColor(resultsBox, "There are no employees in the company", Color.OrangeRed);
+            return;
+        }
+        resultsBox.AppendText("List of employees: " + Environment.NewLine);
+        for(int i = 0; i < employees.Count; i++)
+        {
+            resultsBox.AppendText(employees.get(i) + Environment.NewLine);
+        }
+    }
+
+    private bool IsTextNull(string text)
+    {
+        if (String.IsNullOrWhiteSpace(text))
+        {
+            ChangeTextAndColor(resultsBox, "Please enter a database name.", Color.Yellow);
+            return true;
+        }
+        return false;
+    }
+
+    private void ChangeTextAndColor(TextBox results, string text, Color color)
+    {
+        results.Clear();
+        results.AppendText(text);
+        results.ForeColor = color;
     }
 }
