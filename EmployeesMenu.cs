@@ -71,6 +71,13 @@ public class EmployeesMenu : Form
         getAllEmpsBtn.Click += new EventHandler(actions.GetAllEmployees);
         this.Controls.Add(getAllEmpsBtn);
 
+        Button getEmpInfoBtn = new Button();
+        getEmpInfoBtn.Text = "Employee Info";
+        getEmpInfoBtn.Location = new Point(105, 100);
+        getEmpInfoBtn.Width = 85;
+        getEmpInfoBtn.Click += new EventHandler(actions.GetEmployeeInfo);
+        this.Controls.Add(getEmpInfoBtn);
+
         Button closePageBtn = new Button();
         closePageBtn.Text = "Close";
         closePageBtn.Location = new Point(200, 460);

@@ -41,6 +41,21 @@ public class EmployeesMenuActions
         }
     }
 
+    public void GetEmployeeInfo(object sender, EventArgs e)
+    {
+        String firstName = dbEmployeeFirst.Text.Trim();
+        String lastName = dbEmployeeLast.Text.Trim();
+        resultsBox.Clear();
+        if(!EmployeeHelper.HasEmployee(firstName, lastName))
+        {
+            ChangeTextAndColor(resultsBox, "Employee does not exist", Color.Yellow);
+        }
+        else
+        {
+            ChangeTextAndColor(resultsBox, "Employee exists", Color.Green);
+        }
+    }
+
     private bool IsTextNull(string text)
     {
         if (String.IsNullOrWhiteSpace(text))
