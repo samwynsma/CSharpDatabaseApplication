@@ -334,6 +334,16 @@ public class MainMenuActions
         return;
     }
 
+    public void OpenPrivleges(object sender, EventArgs e)
+    {
+        if(!dbUser.IsAdmin || !dbUser.HasUserPrivs || !dbUser.HasAddedPrivs)
+        {
+            ChangeTextAndColor(infoLabel, "You do not have permission to adjust priveleges.", Color.OrangeRed);
+            return;
+        }
+        return;
+    }
+
     private void DisplayErrorMessage(string message)
     {
         Console.WriteLine("Unexpected error: " + message);
@@ -374,5 +384,5 @@ public class MainMenuActions
         label.BackColor = color;
     }
 
-    
+
 }

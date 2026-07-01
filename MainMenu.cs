@@ -162,6 +162,13 @@ public class MainMenu : Form
         addNewUserBtn.Click += new EventHandler(actions.OpenAddNewUser);
         this.Controls.Add(addNewUserBtn);
 
+        Button adjustPrivilegesBtn = new Button();
+        adjustPrivilegesBtn.Text = "Adjust Priv";
+        adjustPrivilegesBtn.Location = new Point(320, 150);
+        adjustPrivilegesBtn.Width = 100;
+        adjustPrivilegesBtn.Click += new EventHandler(actions.OpenPrivleges);
+        this.Controls.Add(adjustPrivilegesBtn);
+
         Button closeProgramBtn = new Button();
         closeProgramBtn.Text = "Quit";
         closeProgramBtn.Location = new Point(200, 250);
