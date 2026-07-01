@@ -321,6 +321,19 @@ public class MainMenuActions
         new EmployeesMenu(dbUser).ShowDialog();
     }
 
+    public void OpenAddNewUser(object sender, EventArgs e)
+    {
+        /*if(dbUser.Username == "Guest")
+        {
+            new SignUpMenu(dbUser).ShowDialog();
+        }
+        else
+        {
+            new AddNewUserMenu(dbUser).ShowDialog();
+        }*/
+        return;
+    }
+
     private void DisplayErrorMessage(string message)
     {
         Console.WriteLine("Unexpected error: " + message);

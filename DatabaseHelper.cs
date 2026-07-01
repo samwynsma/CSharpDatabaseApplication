@@ -137,6 +137,9 @@ public static class DatabaseHelper
 
     public static bool AuthenticateUser(string username, string password)
     {
+        if(username == "Guest")
+            return false;
+        
         string query = "SELECT COUNT(*) FROM [Users] WHERE [Username] = ? AND [Password] = ?";
 
         using (OleDbConnection conn = new OleDbConnection(ConnString))

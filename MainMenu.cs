@@ -148,6 +148,20 @@ public class MainMenu : Form
         openEmployeesBtn.Click += new EventHandler(actions.OpenEmployees);
         this.Controls.Add(openEmployeesBtn);
 
+        Button addNewUserBtn = new Button();
+        if(dbUser.Username == "Guest")
+        {
+            addNewUserBtn.Text = "Sign Up";
+        }
+        else
+        {
+            addNewUserBtn.Text = "Add User";
+        }
+        addNewUserBtn.Location = new Point(220, 150);
+        addNewUserBtn.Width = 100;
+        addNewUserBtn.Click += new EventHandler(actions.OpenAddNewUser);
+        this.Controls.Add(addNewUserBtn);
+
         Button closeProgramBtn = new Button();
         closeProgramBtn.Text = "Quit";
         closeProgramBtn.Location = new Point(200, 250);
