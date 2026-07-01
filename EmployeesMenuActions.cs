@@ -49,11 +49,10 @@ public class EmployeesMenuActions
         if(!EmployeeHelper.HasEmployee(firstName, lastName))
         {
             ChangeTextAndColor(resultsBox, "Employee does not exist", Color.Yellow);
+            return;
         }
-        else
-        {
-            ChangeTextAndColor(resultsBox, "Employee exists", Color.Green);
-        }
+        String result = EmployeeHelper.GetEmployeeDetails(firstName, lastName);
+        ChangeTextAndColor(resultsBox, result, Color.Green);
     }
 
     private bool IsTextNull(string text)
