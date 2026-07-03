@@ -115,4 +115,39 @@ public static class UserDBHelper
             return isUP;
         }
     }
+
+    public static void AddUserToSystem(string userName, string password)
+    {
+        String query = "INSERT INTO [Users] (Username, Password, Admin, AddDeletePriv, FireHire, Additional, ChangeUser) VALUES (?, ?, 0, 0, 0, 0, 0)";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@Username", userName);
+            cmd.Parameters.AddWithValue("@Password", password);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+    }
+
+    public static bool CheckUserExists(string userName)
+    {
+        string query = $"SELECT COUNT(*) FROM [Users] WHERE [Username] = ?";
+
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@item", userName);
+            conn.Open();
+
+            object result = cmd.ExecuteScalar();
+            int count = 0;
+
+            if (result != null && result != DBNull.Value)
+            {
+                count = Convert.ToInt32(result);
+            }
+
+            return count > 0;
+        }
+    }
 }
