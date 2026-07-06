@@ -10,6 +10,7 @@ public class EmployeesMenu : Form
     private readonly TextBox dbEmployeeFirst;
     private readonly TextBox dbEmployeeLast;
     private readonly TextBox dbDepartment;
+    private readonly ComboBox dbRole;
     private readonly TextBox resultsBox;
     private readonly EmployeesMenuActions actions;
     

@@ -81,4 +81,25 @@ public static class EmployeeHelper
             return details;
         }
     }
+
+    public static List<string> GetEmployeeRoles()
+    {
+        String query = "SELECT DISTINCT Position FROM [Employee]";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            conn.Open();
+
+            List<string> employeeRoles = new List<string>();
+            using (OleDbDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    String position = reader.GetString(0);
+                    employeeRoles.Add(position);
+                }
+            }
+            return employeeRoles;
+        }
+    }
 }
