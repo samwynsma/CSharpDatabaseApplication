@@ -54,6 +54,17 @@ public class EmployeesMenu : Form
         dbDepartment.Width = 100;
         this.Controls.Add(dbDepartment);
 
+        Label roleLabel = new Label();
+        roleLabel.Text = "Role:";
+        roleLabel.Location = new Point(280, 20);
+        roleLabel.AutoSize = true;
+        this.Controls.Add(roleLabel);
+
+        dbRole = new ComboBox();
+        dbRole.Location = new Point(320, 18);
+        dbRole.Width = 100;
+        this.Controls.Add(dbRole);
+
         resultsBox = new TextBox();
         resultsBox.Location = new Point(10, 140);
         resultsBox.Size = new Size(460, 300);
