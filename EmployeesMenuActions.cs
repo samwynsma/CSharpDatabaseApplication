@@ -60,7 +60,14 @@ public class EmployeesMenuActions
 
     public void GetEmployeesByRole(object sender, EventArgs e)
     {
-        return;
+        String employeeRole = dbRole.SelectedItem.ToString();
+        resultsBox.Clear();
+        List<String> employees = EmployeeHelper.GetEmployeesByRole(employeeRole);
+        resultsBox.AppendText("Employees that have the role " + employeeRole + ":" + Environment.NewLine);
+        for(int i = 0; i < employees.Count; i++)
+        {
+            resultsBox.AppendText(employees[i] + Environment.NewLine);
+        }
     }
 
     private bool IsTextNull(string text)

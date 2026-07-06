@@ -338,8 +338,12 @@ public class MainMenuActions
     {
         if(!dbUser.IsAdmin || !dbUser.HasUserPrivs || !dbUser.HasAddedPrivs)
         {
-            ChangeTextAndColor(infoLabel, "You do not have permission to adjust priveleges.", Color.OrangeRed);
+            ChangeTextAndColor(infoLabel, "You do not have permission to adjust privileges.", Color.OrangeRed);
             return;
+        }
+        else
+        {
+            // new AdjustUserPrivsMenu(dbUser).ShowDialog();
         }
         return;
     }

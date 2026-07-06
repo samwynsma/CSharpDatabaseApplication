@@ -102,4 +102,27 @@ public static class EmployeeHelper
             return employeeRoles;
         }
     }
+
+    public static List<string> GetEmployeesByRole(string role)
+    {
+        String q = role;
+        String query = "SELECT [FirstName], LastName FROM [Employee] WHERE [Position] = ?";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@position", role);
+            conn.Open();
+
+            List<string> employees = new List<string>();
+            using (OleDbDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    String employee = reader.GetString(0) + " " + reader.GetString(1);
+                    employees.Add(employee);
+                }
+            }
+            return employees;
+        }
+    }
 }
