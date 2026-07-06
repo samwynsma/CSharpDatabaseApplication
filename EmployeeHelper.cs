@@ -125,4 +125,22 @@ public static class EmployeeHelper
             return employees;
         }
     }
+
+    public static void HireEmployee(string firstName, string lastName, double hourly, string role)
+    {
+        DateTime currentTime = DateTime.Now;
+        String query = "INSERT INTO [Employee] (FirstName, LastName, HireDate, HourlySalary, Position) VALUES (?, ?, ?, ?, ?)";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@first", firstName);
+            cmd.Parameters.AddWithValue("@last", lastName);
+            cmd.Parameters.AddWithValue("@date", currentTime);
+            cmd.Parameters.AddWithValue("@salary", hourly);
+            cmd.Parameters.AddWithValue("@position", role);
+
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+    }
 }
