@@ -18,6 +18,11 @@ public class EmployeesMenu : Form
     public EmployeesMenu(UserInfo dbUser)
     {
         List<string> boxItems = EmployeeHelper.GetEmployeeRoles();
+        object[] boxItemsObject = new object[boxItems.Count];
+        for(int i = 0; i < boxItems.Count; i++)
+        {
+            boxItemsObject[i] = boxItems[i];
+        }
 
         this.dbUser = dbUser;
         this.Text = $"Employees Menu, signed in as {dbUser.Username}";
@@ -66,6 +71,7 @@ public class EmployeesMenu : Form
         dbRole = new ComboBox();
         dbRole.Location = new Point(320, 18);
         dbRole.Width = 100;
+        dbRole.Items.AddRange(boxItemsObject);
         this.Controls.Add(dbRole);
 
         resultsBox = new TextBox();
@@ -77,7 +83,7 @@ public class EmployeesMenu : Form
         // resultsBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         this.Controls.Add(resultsBox);
 
-        actions = new EmployeesMenuActions(dbEmployeeFirst, dbEmployeeLast, dbDepartment, resultsBox, dbUser);
+        actions = new EmployeesMenuActions(dbEmployeeFirst, dbEmployeeLast, dbDepartment, dbRole, resultsBox, dbUser);
 
         Button getAllEmpsBtn = new Button();
         getAllEmpsBtn.Text = "All Emps";
@@ -93,12 +99,20 @@ public class EmployeesMenu : Form
         getEmpInfoBtn.Click += new EventHandler(actions.GetEmployeeInfo);
         this.Controls.Add(getEmpInfoBtn);
 
+        Button getAllEmpsByRoleBtn = new Button();
+        getAllEmpsByRoleBtn.Text = "By Role";
+        getAllEmpsByRoleBtn.Location = new Point(190, 100);
+        getAllEmpsByRoleBtn.Width = 85;
+        getAllEmpsByRoleBtn.Click += new EventHandler(actions.GetEmployeesByRole);
+        this.Controls.Add(getAllEmpsByRoleBtn);
+
         Button closePageBtn = new Button();
         closePageBtn.Text = "Close";
         closePageBtn.Location = new Point(200, 460);
         closePageBtn.Width = 100;
         closePageBtn.Click += new EventHandler(CloseWindow);
         this.Controls.Add(closePageBtn);
+
     }
 
     private void CloseWindow(object sender, EventArgs e)

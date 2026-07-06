@@ -8,6 +8,7 @@ public class EmployeesMenuActions
     private readonly TextBox dbEmployeeFirst;
     private readonly TextBox dbEmployeeLast;
     private readonly TextBox dbDepartment;
+    private readonly ComboBox dbRole;
     private readonly TextBox resultsBox;
     private readonly UserInfo dbUser;
 
@@ -15,12 +16,14 @@ public class EmployeesMenuActions
         TextBox dbEmployeeFirst,
         TextBox dbEmployeeLast,
         TextBox dbDepartment,
+        ComboBox dbRole,
         TextBox resultsBox,
         UserInfo dbUser)
     {
         this.dbEmployeeFirst = dbEmployeeFirst;
         this.dbEmployeeLast = dbEmployeeLast;
         this.dbDepartment = dbDepartment;
+        this.dbRole = dbRole;
         this.resultsBox = resultsBox;
         this.dbUser = dbUser;
     }
@@ -55,6 +58,11 @@ public class EmployeesMenuActions
         ChangeTextAndColor(resultsBox, result, Color.Green);
     }
 
+    public void GetEmployeesByRole(object sender, EventArgs e)
+    {
+        return;
+    }
+
     private bool IsTextNull(string text)
     {
         if (String.IsNullOrWhiteSpace(text))
@@ -71,4 +79,7 @@ public class EmployeesMenuActions
         results.AppendText(text);
         results.ForeColor = color;
     }
+
+    
+
 }
