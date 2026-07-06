@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -16,6 +17,8 @@ public class EmployeesMenu : Form
     
     public EmployeesMenu(UserInfo dbUser)
     {
+        List<string> boxItems = EmployeeHelper.GetEmployeeRoles();
+
         this.dbUser = dbUser;
         this.Text = $"Employees Menu, signed in as {dbUser.Username}";
         this.Size = new Size(500, 550);
