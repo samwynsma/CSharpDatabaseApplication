@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
@@ -7,9 +8,16 @@ using Microsoft.VisualBasic.ApplicationServices;
 public class AdjustUserPrivsMenu : Form
 {
     private readonly UserInfo dbUser;
-    private readonly TextBox dbUserToChange;
+    private readonly ComboBox dbUserToChange;
     public AdjustUserPrivsMenu(UserInfo dbUser)
     {
+        List<string> boxItems = UserDBHelper.GetAllUsers(dbUser.Username);
+        object[] boxItemsObject = new object[boxItems.Count];
+        for(int i = 0; i < boxItems.Count; i++)
+        {
+            boxItemsObject[i] = boxItems[i];
+        }
+
         this.dbUser = dbUser;
         this.Text = $"User Privileges Menu, signed in as {dbUser.Username}";
         this.Size = new Size(500, 550);
@@ -21,9 +29,10 @@ public class AdjustUserPrivsMenu : Form
         userLabel.AutoSize = true;
         this.Controls.Add(userLabel);
 
-        dbUserToChange = new TextBox();
+        dbUserToChange = new ComboBox();
         dbUserToChange.Location = new Point(250, 18);
         dbUserToChange.Width = 100;
+        dbUserToChange.Items.AddRange(boxItemsObject);
         this.Controls.Add(dbUserToChange);
 
         Button closePageBtn = new Button();

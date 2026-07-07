@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data.OleDb;
 
 public static class UserDBHelper
@@ -149,5 +150,28 @@ public static class UserDBHelper
 
             return count > 0;
         }
+    }
+
+    public static List<string> GetAllUsers(string disallowed)
+    {
+        string query = $"SELECT [Username] FROM [Users] Where [Username] <> ?";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@item", disallowed);
+            conn.Open();
+
+            List<string> users = new List<string>();
+            using (OleDbDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    users.Add(reader.GetString(0));
+                }
+            }
+            return users;
+
+        }
+        throw new NotImplementedException();
     }
 }
