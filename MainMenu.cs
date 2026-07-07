@@ -31,7 +31,6 @@ public class MainMenu : Form
         dbItem.Width = 100;
         this.Controls.Add(dbItem);
 
-
         Label addLabel = new Label();
         addLabel.Text = "Quantity: ";
         addLabel.Location = new Point(10, 40);

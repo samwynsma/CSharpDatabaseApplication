@@ -9,6 +9,10 @@ public class AdjustUserPrivsMenu : Form
 {
     private readonly UserInfo dbUser;
     private readonly ComboBox dbUserToChange;
+    private readonly GroupBox IsAdminCheck;
+    private readonly GroupBox IsAddDelete;
+    private readonly GroupBox IsFireHire;
+    private readonly GroupBox IsChangeUser;
     public AdjustUserPrivsMenu(UserInfo dbUser)
     {
         List<string> boxItems = UserDBHelper.GetAllUsers(dbUser.Username);
@@ -34,6 +38,27 @@ public class AdjustUserPrivsMenu : Form
         dbUserToChange.Width = 100;
         dbUserToChange.Items.AddRange(boxItemsObject);
         this.Controls.Add(dbUserToChange);
+
+        Label adminLabel = new Label();
+        adminLabel.Text = "Admin Privileges:";
+        adminLabel.Location = new Point(100, 50);
+        adminLabel.AutoSize = true;
+        this.Controls.Add(adminLabel);
+
+        IsAdminCheck = new GroupBox();
+
+        RadioButton adminYes = new RadioButton();
+        adminYes.Text = "Yes";
+        adminYes.Location = new Point(200, 48);
+        this.Controls.Add(adminYes);
+
+        RadioButton adminNo = new RadioButton();
+        adminNo.Text = "No";
+        adminNo.Location = new Point(250, 40);
+        this.Controls.Add(adminNo);
+
+        IsAdminCheck.Controls.Add(adminYes);
+        IsAdminCheck.Controls.Add(adminNo);
 
         Button closePageBtn = new Button();
         closePageBtn.Text = "Close";
