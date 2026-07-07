@@ -343,7 +343,7 @@ public class MainMenuActions
         }
         else
         {
-            // new AdjustUserPrivsMenu(dbUser).ShowDialog();
+            new AdjustUserPrivsMenu(dbUser).ShowDialog();
         }
         return;
     }
