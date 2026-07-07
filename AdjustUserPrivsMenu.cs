@@ -93,6 +93,33 @@ public class AdjustUserPrivsMenu : Form
         IsAddDelete.Controls.Add(addDelYes);
         IsAddDelete.Controls.Add(addDelNo);
 
+        // Fire/Hire Prompt
+        Label FireHireLabel = new Label();
+        FireHireLabel.Text = "Fire/Hire Privileges:";
+        FireHireLabel.Location = new Point(25, 220);
+        FireHireLabel.AutoSize = true;
+        this.Controls.Add(FireHireLabel);
+
+        IsFireHire = new GroupBox();
+        IsFireHire.Location = new Point(150, 190);
+        IsFireHire.Size = new Size(220, 60);
+        IsFireHire.Text = string.Empty;
+        this.Controls.Add(IsFireHire);
+
+        RadioButton fireHireYes = new RadioButton();
+        fireHireYes.Text = "Yes";
+        fireHireYes.Location = new Point(20, 20);
+        fireHireYes.AutoSize = true;
+        fireHireYes.Checked = true;
+
+        RadioButton fireHireNo = new RadioButton();
+        fireHireNo.Text = "No";
+        fireHireNo.Location = new Point(90, 20);
+        fireHireNo.AutoSize = true;
+
+        IsFireHire.Controls.Add(fireHireYes);
+        IsFireHire.Controls.Add(fireHireNo);
+
         Button closePageBtn = new Button();
         closePageBtn.Text = "Close";
         closePageBtn.Location = new Point(200, 460);
