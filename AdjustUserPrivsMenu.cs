@@ -46,16 +46,21 @@ public class AdjustUserPrivsMenu : Form
         this.Controls.Add(adminLabel);
 
         IsAdminCheck = new GroupBox();
+        IsAdminCheck.Location = new Point(100, 70);
+        IsAdminCheck.Size = new Size(220, 60);
+        IsAdminCheck.Text = string.Empty;
+        this.Controls.Add(IsAdminCheck);
 
         RadioButton adminYes = new RadioButton();
         adminYes.Text = "Yes";
-        adminYes.Location = new Point(200, 48);
-        this.Controls.Add(adminYes);
+        adminYes.Location = new Point(20, 20);
+        adminYes.AutoSize = true;
+        adminYes.Checked = true;
 
         RadioButton adminNo = new RadioButton();
         adminNo.Text = "No";
-        adminNo.Location = new Point(250, 40);
-        this.Controls.Add(adminNo);
+        adminNo.Location = new Point(90, 20);
+        adminNo.AutoSize = true;
 
         IsAdminCheck.Controls.Add(adminYes);
         IsAdminCheck.Controls.Add(adminNo);
