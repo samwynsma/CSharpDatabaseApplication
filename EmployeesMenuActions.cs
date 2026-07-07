@@ -48,6 +48,8 @@ public class EmployeesMenuActions
     {
         String firstName = dbEmployeeFirst.Text.Trim();
         String lastName = dbEmployeeLast.Text.Trim();
+        if (IsTextNull(firstName) || IsTextNull(lastName))
+            return;
         resultsBox.Clear();
         if(!EmployeeHelper.HasEmployee(firstName, lastName))
         {
@@ -61,6 +63,8 @@ public class EmployeesMenuActions
     public void GetEmployeesByRole(object sender, EventArgs e)
     {
         String employeeRole = dbRole.SelectedItem.ToString();
+        if (IsTextNull(employeeRole))
+            return;
         resultsBox.Clear();
         List<String> employees = EmployeeHelper.GetEmployeesByRole(employeeRole);
         resultsBox.AppendText("Employees that have the role " + employeeRole + ":" + Environment.NewLine);
@@ -74,7 +78,7 @@ public class EmployeesMenuActions
     {
         if (String.IsNullOrWhiteSpace(text))
         {
-            ChangeTextAndColor(resultsBox, "Please enter a database name.", Color.Yellow);
+            ChangeTextAndColor(resultsBox, "Please fill in all required text boxes.", Color.Yellow);
             return true;
         }
         return false;
