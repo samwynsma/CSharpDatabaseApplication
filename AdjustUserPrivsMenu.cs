@@ -39,14 +39,15 @@ public class AdjustUserPrivsMenu : Form
         dbUserToChange.Items.AddRange(boxItemsObject);
         this.Controls.Add(dbUserToChange);
 
+        // Admin Prompt
         Label adminLabel = new Label();
         adminLabel.Text = "Admin Privileges:";
-        adminLabel.Location = new Point(100, 50);
+        adminLabel.Location = new Point(25, 80);
         adminLabel.AutoSize = true;
         this.Controls.Add(adminLabel);
 
         IsAdminCheck = new GroupBox();
-        IsAdminCheck.Location = new Point(100, 70);
+        IsAdminCheck.Location = new Point(150, 50);
         IsAdminCheck.Size = new Size(220, 60);
         IsAdminCheck.Text = string.Empty;
         this.Controls.Add(IsAdminCheck);
@@ -64,6 +65,33 @@ public class AdjustUserPrivsMenu : Form
 
         IsAdminCheck.Controls.Add(adminYes);
         IsAdminCheck.Controls.Add(adminNo);
+
+        // Add/Delete Prompt
+        Label addDelLabel = new Label();
+        addDelLabel.Text = "Add/Delete Privileges:";
+        addDelLabel.Location = new Point(25, 150);
+        addDelLabel.AutoSize = true;
+        this.Controls.Add(addDelLabel);
+
+        IsAddDelete = new GroupBox();
+        IsAddDelete.Location = new Point(150, 120);
+        IsAddDelete.Size = new Size(220, 60);
+        IsAddDelete.Text = string.Empty;
+        this.Controls.Add(IsAddDelete);
+
+        RadioButton addDelYes = new RadioButton();
+        addDelYes.Text = "Yes";
+        addDelYes.Location = new Point(20, 20);
+        addDelYes.AutoSize = true;
+        addDelYes.Checked = true;
+
+        RadioButton addDelNo = new RadioButton();
+        addDelNo.Text = "No";
+        addDelNo.Location = new Point(90, 20);
+        addDelNo.AutoSize = true;
+
+        IsAddDelete.Controls.Add(addDelYes);
+        IsAddDelete.Controls.Add(addDelNo);
 
         Button closePageBtn = new Button();
         closePageBtn.Text = "Close";
