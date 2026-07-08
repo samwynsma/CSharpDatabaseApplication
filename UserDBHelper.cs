@@ -154,7 +154,7 @@ public static class UserDBHelper
 
     public static List<string> GetAllUsers(string disallowed)
     {
-        string query = $"SELECT [Username] FROM [Users] Where [Username] <> ?";
+        string query = $"SELECT [Username] FROM [Users] WHERE [Username] <> ?";
         using (OleDbConnection conn = new OleDbConnection(ConnString))
         using (OleDbCommand cmd = new OleDbCommand(query, conn))
         {
@@ -172,6 +172,31 @@ public static class UserDBHelper
             return users;
 
         }
-        throw new NotImplementedException();
+    }
+
+    public static List<bool> GetCurrentActivePrivs(string user)
+    {
+        string query = $"SELECT * FROM [Users] WHERE [Usernam] = ?";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            cmd.Parameters.AddWithValue("@item", user);
+            conn.Open();
+
+            List<bool> privs = new List<bool>();
+            using (OleDbDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    privs.Add(reader.GetBoolean(1));
+                    privs.Add(reader.GetBoolean(2));
+                    privs.Add(reader.GetBoolean(3));
+                    privs.Add(reader.GetBoolean(4));
+                    privs.Add(reader.GetBoolean(5));
+                }
+            }
+            return privs;
+
+        }
     }
 }

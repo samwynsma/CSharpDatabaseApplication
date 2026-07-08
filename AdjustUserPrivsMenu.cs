@@ -147,12 +147,24 @@ public class AdjustUserPrivsMenu : Form
         IsChangeUser.Controls.Add(changeUserYes);
         IsChangeUser.Controls.Add(changeUserNo);
 
+        Button changePrivsBtn = new Button();
+        changePrivsBtn.Text = "Modify Privs";
+        changePrivsBtn.Location = new Point(200, 420);
+        changePrivsBtn.Width = 100;
+        changePrivsBtn.Click += new EventHandler(ChangePrivileges);
+        this.Controls.Add(changePrivsBtn);
+
         Button closePageBtn = new Button();
         closePageBtn.Text = "Close";
         closePageBtn.Location = new Point(200, 460);
         closePageBtn.Width = 100;
         closePageBtn.Click += new EventHandler(CloseWindow);
         this.Controls.Add(closePageBtn);
+    }
+
+    private void ChangePrivileges(object sender, EventArgs e)
+    {
+        return;
     }
 
     private void CloseWindow(object sender, EventArgs e)
