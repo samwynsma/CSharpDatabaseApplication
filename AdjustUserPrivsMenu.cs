@@ -42,7 +42,7 @@ public class AdjustUserPrivsMenu : Form
         // Admin Prompt
         Label adminLabel = new Label();
         adminLabel.Text = "Admin Privileges:";
-        adminLabel.Location = new Point(25, 80);
+        adminLabel.Location = new Point(20, 80);
         adminLabel.AutoSize = true;
         this.Controls.Add(adminLabel);
 
@@ -69,7 +69,7 @@ public class AdjustUserPrivsMenu : Form
         // Add/Delete Prompt
         Label addDelLabel = new Label();
         addDelLabel.Text = "Add/Delete Privileges:";
-        addDelLabel.Location = new Point(25, 150);
+        addDelLabel.Location = new Point(20, 150);
         addDelLabel.AutoSize = true;
         this.Controls.Add(addDelLabel);
 
@@ -96,7 +96,7 @@ public class AdjustUserPrivsMenu : Form
         // Fire/Hire Prompt
         Label FireHireLabel = new Label();
         FireHireLabel.Text = "Fire/Hire Privileges:";
-        FireHireLabel.Location = new Point(25, 220);
+        FireHireLabel.Location = new Point(20, 220);
         FireHireLabel.AutoSize = true;
         this.Controls.Add(FireHireLabel);
 
@@ -119,6 +119,33 @@ public class AdjustUserPrivsMenu : Form
 
         IsFireHire.Controls.Add(fireHireYes);
         IsFireHire.Controls.Add(fireHireNo);
+
+        // Change User Prompt
+        Label ChangeUserLabel = new Label();
+        ChangeUserLabel.Text = "Change User Privileges:";
+        ChangeUserLabel.Location = new Point(20, 290);
+        ChangeUserLabel.AutoSize = true;
+        this.Controls.Add(ChangeUserLabel);
+
+        IsChangeUser = new GroupBox();
+        IsChangeUser.Location = new Point(150, 260);
+        IsChangeUser.Size = new Size(220, 60);
+        IsChangeUser.Text = string.Empty;
+        this.Controls.Add(IsChangeUser);
+
+        RadioButton changeUserYes = new RadioButton();
+        changeUserYes.Text = "Yes";
+        changeUserYes.Location = new Point(20, 20);
+        changeUserYes.AutoSize = true;
+        changeUserYes.Checked = true;
+
+        RadioButton changeUserNo = new RadioButton();
+        changeUserNo.Text = "No";
+        changeUserNo.Location = new Point(90, 20);
+        changeUserNo.AutoSize = true;
+
+        IsChangeUser.Controls.Add(changeUserYes);
+        IsChangeUser.Controls.Add(changeUserNo);
 
         Button closePageBtn = new Button();
         closePageBtn.Text = "Close";
