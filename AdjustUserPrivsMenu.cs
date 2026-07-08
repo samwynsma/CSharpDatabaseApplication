@@ -13,6 +13,10 @@ public class AdjustUserPrivsMenu : Form
     private readonly GroupBox IsAddDelete;
     private readonly GroupBox IsFireHire;
     private readonly GroupBox IsChangeUser;
+    private RadioButton adminYes, adminNo;
+    private RadioButton addDelYes, addDelNo;
+    private RadioButton fireHireYes, fireHireNo;
+    private RadioButton changeUserYes, changeUserNo;
     public AdjustUserPrivsMenu(UserInfo dbUser)
     {
         List<string> boxItems = UserDBHelper.GetAllUsers(dbUser.Username);
@@ -37,6 +41,7 @@ public class AdjustUserPrivsMenu : Form
         dbUserToChange.Location = new Point(250, 18);
         dbUserToChange.Width = 100;
         dbUserToChange.Items.AddRange(boxItemsObject);
+        dbUserToChange.SelectedIndexChanged += new EventHandler(OnUserSelected);
         this.Controls.Add(dbUserToChange);
 
         // Admin Prompt
@@ -52,13 +57,13 @@ public class AdjustUserPrivsMenu : Form
         IsAdminCheck.Text = string.Empty;
         this.Controls.Add(IsAdminCheck);
 
-        RadioButton adminYes = new RadioButton();
+        adminYes = new RadioButton();
         adminYes.Text = "Yes";
         adminYes.Location = new Point(20, 20);
         adminYes.AutoSize = true;
         adminYes.Checked = true;
 
-        RadioButton adminNo = new RadioButton();
+        adminNo = new RadioButton();
         adminNo.Text = "No";
         adminNo.Location = new Point(90, 20);
         adminNo.AutoSize = true;
@@ -79,13 +84,13 @@ public class AdjustUserPrivsMenu : Form
         IsAddDelete.Text = string.Empty;
         this.Controls.Add(IsAddDelete);
 
-        RadioButton addDelYes = new RadioButton();
+        addDelYes = new RadioButton();
         addDelYes.Text = "Yes";
         addDelYes.Location = new Point(20, 20);
         addDelYes.AutoSize = true;
         addDelYes.Checked = true;
 
-        RadioButton addDelNo = new RadioButton();
+        addDelNo = new RadioButton();
         addDelNo.Text = "No";
         addDelNo.Location = new Point(90, 20);
         addDelNo.AutoSize = true;
@@ -106,13 +111,13 @@ public class AdjustUserPrivsMenu : Form
         IsFireHire.Text = string.Empty;
         this.Controls.Add(IsFireHire);
 
-        RadioButton fireHireYes = new RadioButton();
+        fireHireYes = new RadioButton();
         fireHireYes.Text = "Yes";
         fireHireYes.Location = new Point(20, 20);
         fireHireYes.AutoSize = true;
         fireHireYes.Checked = true;
 
-        RadioButton fireHireNo = new RadioButton();
+        fireHireNo = new RadioButton();
         fireHireNo.Text = "No";
         fireHireNo.Location = new Point(90, 20);
         fireHireNo.AutoSize = true;
@@ -133,13 +138,13 @@ public class AdjustUserPrivsMenu : Form
         IsChangeUser.Text = string.Empty;
         this.Controls.Add(IsChangeUser);
 
-        RadioButton changeUserYes = new RadioButton();
+        changeUserYes = new RadioButton();
         changeUserYes.Text = "Yes";
         changeUserYes.Location = new Point(20, 20);
         changeUserYes.AutoSize = true;
         changeUserYes.Checked = true;
 
-        RadioButton changeUserNo = new RadioButton();
+        changeUserNo = new RadioButton();
         changeUserNo.Text = "No";
         changeUserNo.Location = new Point(90, 20);
         changeUserNo.AutoSize = true;
@@ -165,6 +170,35 @@ public class AdjustUserPrivsMenu : Form
     private void ChangePrivileges(object sender, EventArgs e)
     {
         return;
+    }
+
+    private void OnUserSelected(object sender, EventArgs e)
+    {
+        if (dbUserToChange.SelectedItem != null)
+        {
+            string selectedUser = dbUserToChange.SelectedItem.ToString();
+            PopulateUserPrivileges(selectedUser);
+        }
+    }
+
+    private void PopulateUserPrivileges(string username)
+    {
+        List<bool> privs = UserDBHelper.GetCurrentActivePrivs(username);
+        
+        if (privs.Count >= 4)
+        {
+            adminYes.Checked = privs[0];
+            adminNo.Checked = !privs[0];
+
+            addDelYes.Checked = privs[1];
+            addDelNo.Checked = !privs[1];
+
+            fireHireYes.Checked = privs[2];
+            fireHireNo.Checked = !privs[2];
+
+            changeUserYes.Checked = privs[3];
+            changeUserNo.Checked = !privs[3];
+        }
     }
 
     private void CloseWindow(object sender, EventArgs e)

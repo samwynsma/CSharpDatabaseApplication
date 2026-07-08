@@ -170,13 +170,12 @@ public static class UserDBHelper
                 }
             }
             return users;
-
         }
     }
 
     public static List<bool> GetCurrentActivePrivs(string user)
     {
-        string query = $"SELECT * FROM [Users] WHERE [Usernam] = ?";
+        string query = $"SELECT * FROM [Users] WHERE [Username] = ?";
         using (OleDbConnection conn = new OleDbConnection(ConnString))
         using (OleDbCommand cmd = new OleDbCommand(query, conn))
         {
@@ -188,15 +187,14 @@ public static class UserDBHelper
             {
                 while (reader.Read())
                 {
-                    privs.Add(reader.GetBoolean(1));
-                    privs.Add(reader.GetBoolean(2));
                     privs.Add(reader.GetBoolean(3));
                     privs.Add(reader.GetBoolean(4));
                     privs.Add(reader.GetBoolean(5));
+                    privs.Add(reader.GetBoolean(6));
+                    privs.Add(reader.GetBoolean(7));
                 }
             }
             return privs;
-
         }
     }
 }
