@@ -6,5 +6,8 @@ using Microsoft.VisualBasic.ApplicationServices;
 
 public class AddNewUserMenu : Form
 {
-    
+    private void CloseWindow(object sender, EventArgs e)
+    {
+        this.Close();
+    }
 }
