@@ -197,4 +197,9 @@ public static class UserDBHelper
             return privs;
         }
     }
+
+    public static void AddUserToDatabase(string user, string password)
+    {
+        String query = $"INSERT INTO [Users] (Username, Password), VALUES ([{user}], [{password}])";
+    }
 }
