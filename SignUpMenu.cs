@@ -7,6 +7,7 @@ using Microsoft.VisualBasic.ApplicationServices;
 public class SignUpMenu : Form
 {
     private readonly TextBox userToAdd;
+    private readonly TextBox passwordToAdd;
     public SignUpMenu()
     {
         this.Text = $"Welcome, new user!";
@@ -23,6 +24,17 @@ public class SignUpMenu : Form
         userToAdd.Location = new Point(100, 18);
         userToAdd.Width = 100;
         this.Controls.Add(userToAdd);
+
+        Label passwordLabel = new Label();
+        passwordLabel.Text = "Username:";
+        passwordLabel.Location = new Point(10, 40);
+        passwordLabel.AutoSize = true;
+        this.Controls.Add(passwordLabel);
+
+        passwordToAdd = new TextBox();
+        passwordToAdd.Location = new Point(100, 38);
+        passwordToAdd.Width = 100;
+        this.Controls.Add(passwordToAdd);
 
         Button closePageBtn = new Button();
         closePageBtn.Text = "Close";

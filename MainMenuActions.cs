@@ -323,10 +323,10 @@ public class MainMenuActions
 
     public void OpenAddNewUser(object sender, EventArgs e)
     {
-        /*if(dbUser.Username == "Guest")
+        if(dbUser.Username == "Guest")
         {
-            new SignUpMenu(dbUser).ShowDialog();
-        }
+            new SignUpMenu().ShowDialog();
+        }/*
         else
         {
             new AddNewUserMenu(dbUser).ShowDialog();
