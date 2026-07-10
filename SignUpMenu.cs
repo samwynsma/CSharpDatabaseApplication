@@ -8,10 +8,11 @@ public class SignUpMenu : Form
 {
     private readonly TextBox userToAdd;
     private readonly TextBox passwordToAdd;
+    private readonly TextBox passwordToVerify;
     public SignUpMenu()
     {
         this.Text = $"Welcome, new user!";
-        this.Size = new Size(300, 350);
+        this.Size = new Size(300, 300);
         this.StartPosition = FormStartPosition.CenterScreen;
 
         Label userNameLabel = new Label();
@@ -36,9 +37,20 @@ public class SignUpMenu : Form
         passwordToAdd.Width = 100;
         this.Controls.Add(passwordToAdd);
 
+        Label verifyLabel = new Label();
+        verifyLabel.Text = "Username:";
+        verifyLabel.Location = new Point(10, 40);
+        verifyLabel.AutoSize = true;
+        this.Controls.Add(passwordLabel);
+
+        passwordToVerify = new TextBox();
+        passwordToVerify.Location = new Point(100, 38);
+        passwordToVerify.Width = 100;
+        this.Controls.Add(passwordToVerify);
+
         Button closePageBtn = new Button();
         closePageBtn.Text = "Close";
-        closePageBtn.Location = new Point(120, 300);
+        closePageBtn.Location = new Point(100, 220);
         closePageBtn.Width = 100;
         closePageBtn.Click += new EventHandler(CloseWindow);
         this.Controls.Add(closePageBtn);
