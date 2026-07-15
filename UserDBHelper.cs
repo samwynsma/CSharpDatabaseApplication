@@ -201,5 +201,11 @@ public static class UserDBHelper
     public static void AddUserToDatabase(string user, string password)
     {
         String query = $"INSERT INTO [Users] (Username, Password), VALUES ([{user}], [{password}])";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
     }
 }
