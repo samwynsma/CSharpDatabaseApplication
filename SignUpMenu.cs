@@ -10,7 +10,7 @@ public class SignUpMenu : Form
     private readonly TextBox passwordToAdd;
     private readonly TextBox passwordToVerify;
     private readonly UserActions actions;
-    private readonly User newUser;
+    private readonly UserInfo newUser;
     public SignUpMenu()
     {
         this.Text = $"Welcome, new user!";
