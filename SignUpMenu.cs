@@ -9,6 +9,8 @@ public class SignUpMenu : Form
     private readonly TextBox userToAdd;
     private readonly TextBox passwordToAdd;
     private readonly TextBox passwordToVerify;
+    private readonly UserActions actions;
+    private readonly User newUser;
     public SignUpMenu()
     {
         this.Text = $"Welcome, new user!";
@@ -52,7 +54,7 @@ public class SignUpMenu : Form
         addUserBtn.Text = "Sign Up";
         addUserBtn.Location = new Point(100, 120);
         addUserBtn.Width = 100;
-        //addUserBtn.Click += new EventHandler(UserActions.AddUser);
+        addUserBtn.Click += new EventHandler(actions.AddUser);
         this.Controls.Add(addUserBtn);
 
         Button closePageBtn = new Button();
