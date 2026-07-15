@@ -27,7 +27,7 @@ public class SignUpMenu : Form
         this.Controls.Add(userToAdd);
 
         Label passwordLabel = new Label();
-        passwordLabel.Text = "Username:";
+        passwordLabel.Text = "Password:";
         passwordLabel.Location = new Point(10, 40);
         passwordLabel.AutoSize = true;
         this.Controls.Add(passwordLabel);
@@ -38,7 +38,7 @@ public class SignUpMenu : Form
         this.Controls.Add(passwordToAdd);
 
         Label verifyLabel = new Label();
-        verifyLabel.Text = "Username:";
+        verifyLabel.Text = "Verify Password:";
         verifyLabel.Location = new Point(10, 40);
         verifyLabel.AutoSize = true;
         this.Controls.Add(passwordLabel);
@@ -47,6 +47,13 @@ public class SignUpMenu : Form
         passwordToVerify.Location = new Point(100, 38);
         passwordToVerify.Width = 100;
         this.Controls.Add(passwordToVerify);
+
+        Button addUserBtn = new Button();
+        addUserBtn.Text = "Sign Up";
+        addUserBtn.Location = new Point(100, 120);
+        addUserBtn.Width = 100;
+        //addUserBtn.Click += new EventHandler(UserActions.AddUser);
+        this.Controls.Add(addUserBtn);
 
         Button closePageBtn = new Button();
         closePageBtn.Text = "Close";
