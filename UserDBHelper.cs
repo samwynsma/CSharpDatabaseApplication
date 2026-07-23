@@ -208,4 +208,19 @@ public static class UserDBHelper
             cmd.ExecuteNonQuery();
         }
     }
+
+    public static void UpdatePermission(string permission, string user, bool newPermission)
+    {
+        String query = $"UPDATE [Users] SET [{permission}] = ? WHERE Username = [{user}]";
+        using (OleDbConnection conn = new OleDbConnection(ConnString))
+        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+        {
+            if(newPermission)
+                cmd.Parameters.AddWithValue("@perm", 1);
+            else
+                cmd.Parameters.AddWithValue("@perm", 0);
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+    }
 }
